@@ -994,7 +994,7 @@ function countForMuscle(muscle){
 function isInWorkout(muscle, cat, exercise){
   return myWorkout.some(w => w.muscle===muscle && w.category===cat && w.exercise===exercise);
 }
-function addToWorkout(muscle, cat, exercise){
+function addToWorkout(muscle, cat, exercise, preferredVideoId){
   if(isInWorkout(muscle, cat, exercise)) return;
   const cap = capFor(muscle);
   const current = countForMuscle(muscle);
@@ -1004,11 +1004,15 @@ function addToWorkout(muscle, cat, exercise){
   }
   const goal = state.goal || 'Endurance';
   const g = GOALS[goal];
+  const availableVideos = getVideosFor(exercise);
+  const chosenVideo = (preferredVideoId && availableVideos.includes(preferredVideoId))
+    ? preferredVideoId
+    : (availableVideos[0] || null);
   myWorkout.push({
     id: Date.now()+'_'+Math.random().toString(36).slice(2,7),
     muscle, category: cat, exercise, goal,
     sets: g.sets, reps: g.reps, rir: `${g.rir}, RPE ${g.rpe}`, rest: g.rest,
-    videoId: (getVideosFor(exercise)[0]) || null
+    videoId: chosenVideo
   });
   saveWorkout();
   renderWorkoutBar();
@@ -1110,7 +1114,7 @@ function renderSheet(){
     const muscleTd = el('td','muscle-cell', w.muscle);
     tr.appendChild(muscleTd);
 
-    const exTd = el('td', null, `${w.exercise}${w.videoId ? ` <a href="https://www.youtube.com/watch?v=${w.videoId}" target="_blank" rel="noopener" style="color:var(--sage-deep);text-decoration:none;">▶</a>` : ''}`);
+    const exTd = el('td', null, `${w.exercise}${w.videoId ? ` <a href="https://www.youtube.com/watch?v=${w.videoId}" target="_blank" rel="noopener" title="${(VIDEO_LOOKUP[w.videoId]||'').replace(/"/g,'&quot;')}" style="color:var(--sage-deep);text-decoration:none;">▶ ${VIDEO_LOOKUP[w.videoId] || 'video'}</a>` : ''}`);
     tr.appendChild(exTd);
 
     const goalTd = el('td', null, w.goal);
@@ -1160,7 +1164,7 @@ function renderSheet(){
     myWorkout.forEach(w=>{
       lines.push(`${w.muscle} — ${w.exercise}`);
       lines.push(`  ${w.goal}: ${w.sets} sets x ${w.reps} reps, ${w.rir}, ${w.rest} rest`);
-      if(w.videoId) lines.push(`  Video: https://www.youtube.com/watch?v=${w.videoId}`);
+      if(w.videoId) lines.push(`  Video (${VIDEO_LOOKUP[w.videoId] || 'untitled'}): https://www.youtube.com/watch?v=${w.videoId}`);
       lines.push('');
     });
     navigator.clipboard.writeText(lines.join('\n')).then(()=>{
@@ -1291,7 +1295,7 @@ function renderResults(){
           const item = myWorkout.find(w=>w.muscle===state.muscle && w.category===cat && w.exercise===ex);
           if(item) removeFromWorkoutById(item.id);
         } else {
-          addToWorkout(state.muscle, cat, ex);
+          addToWorkout(state.muscle, cat, ex, openVideoPanels[ex]);
         }
       };
       actions.appendChild(addBtn);
@@ -1482,7 +1486,7 @@ function renderSearchResults(){
         if(wi) removeFromWorkoutById(wi.id);
         renderSearchResults();
       } else {
-        addToWorkout(h.muscle, h.category, h.exercise);
+        addToWorkout(h.muscle, h.category, h.exercise, openSearchVideoPanels[key]);
         renderSearchResults();
       }
     };
