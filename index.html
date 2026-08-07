@@ -1160,9 +1160,14 @@ function buildWorkoutPlayerHTML(){
 function openWorkoutPlayer(){
   if(myWorkout.length===0) return;
   const html = buildWorkoutPlayerHTML();
-  const blob = new Blob([html], {type: 'text/html'});
-  const url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
+  const win = window.open('', '_blank');
+  if(!win){
+    alert('Your browser blocked the new tab — please allow popups for this site and try again.');
+    return;
+  }
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
 }
 
 function renderSheet(){
