@@ -125,17 +125,38 @@
 
   /* EXERCISE SEARCH */
   .search-block{margin-bottom:30px;}
+  .search-input-wrap{position:relative;}
   .exercise-search-input{
     width:100%;
     background:var(--card);
     border:1px solid var(--border);
     border-radius:12px;
-    padding:13px 16px;
+    padding:13px 44px 13px 16px;
     font-family:'Inter',sans-serif;
     font-size:14px;
     color:var(--ink);
   }
   .exercise-search-input:focus{outline:none;border-color:var(--peach-deep);}
+  .search-clear-btn{
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:none;
+    background:var(--border);
+    color:var(--ink-dim);
+    font-size:13px;
+    line-height:1;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+  }
+  .search-clear-btn:hover{background:var(--peach);color:#4a2c14;}
+  .search-clear-btn.visible{display:flex;}
   .search-results-list{
     margin-top:10px;
     display:flex;
@@ -806,7 +827,10 @@
 
   <p class="section-label">Or, search by exercise name</p>
   <div class="search-block">
-    <input type="text" id="exerciseSearchInput" class="exercise-search-input" placeholder="Search exercises… e.g. calf raise, lunge, plank">
+    <div class="search-input-wrap">
+      <input type="text" id="exerciseSearchInput" class="exercise-search-input" placeholder="Search exercises… e.g. calf raise, lunge, plank">
+      <button type="button" id="exerciseSearchClear" class="search-clear-btn" aria-label="Clear search" title="Clear search">✕</button>
+    </div>
     <div id="exerciseSearchResults"></div>
   </div>
 
@@ -970,14 +994,176 @@ function renderWorkoutBar(){
   const actions = el('div','workout-bar-actions');
   const createBtn = el('button','btn-primary','Create workout sheet →');
   createBtn.onclick = renderSheet;
+  const playerBtn = el('button','btn-ghost','▶ Open Workout Player');
+  playerBtn.onclick = openWorkoutPlayer;
   const clearBtn = el('button','btn-ghost','Clear');
   clearBtn.onclick = clearWorkout;
   actions.appendChild(createBtn);
+  actions.appendChild(playerBtn);
   actions.appendChild(clearBtn);
   bar.appendChild(actions);
 }
 
 function closeSheet(){ document.getElementById('sheetRoot').innerHTML = ''; }
+
+function buildWorkoutPlayerHTML(){
+  const title = (workoutMeta.name || 'My Workout').replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  const dateLabel = (workoutMeta.dateLabel || '').replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  const esc = (s)=> String(s==null?'':s).replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+
+  const itemsHTML = myWorkout.map((w, i)=>{
+    const videoBlock = w.videoId ? `
+      <div class="player-video">
+        <iframe src="https://www.youtube.com/embed/${esc(w.videoId)}" title="${esc(VIDEO_LOOKUP[w.videoId]||w.exercise)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      </div>` : `<p class="player-no-video">No video attached for this exercise.</p>`;
+    return `
+    <section class="player-item" data-item-id="${esc(w.id)}">
+      <label class="player-item-head">
+        <input type="checkbox" class="player-check" data-id="${esc(w.id)}">
+        <div class="player-item-titles">
+          <span class="player-muscle-tag">${esc(w.muscle)}</span>
+          <h2>${i+1}. ${esc(w.exercise)}</h2>
+        </div>
+      </label>
+      <div class="player-prescription">
+        <span><b>${esc(w.goal)}</b></span>
+        <span>${esc(w.sets)} sets</span>
+        <span>${esc(w.reps)} reps</span>
+        <span>${esc(w.rir)}</span>
+        <span>${esc(w.rest)} rest</span>
+      </div>
+      ${videoBlock}
+    </section>`;
+  }).join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title} — The RunSpace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6f0; --card:#ffffff; --border:#ecdfd0; --ink:#3d4446; --ink-dim:#8a8580;
+    --peach:#f1ab7c; --peach-deep:#e8935f; --peach-dim:#f1ab7c26;
+    --sage:#e7efdd; --sage-deep:#7fa568; --sage-dim:#7fa56826;
+    --gold:#ffc845; --red:#e8583f;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;}
+  .player-wrap{max-width:760px;margin:0 auto;padding:28px 20px 80px;}
+  .player-head{
+    background:linear-gradient(135deg, var(--peach) 0%, #f3bd97 100%);
+    border-radius:22px;padding:26px 28px;margin-bottom:20px;
+  }
+  .player-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#5c3a20;text-transform:uppercase;margin:0 0 6px;font-weight:700;}
+  .player-head h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:30px;margin:0 0 4px;color:var(--ink);}
+  .player-date{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#5c3a20;margin:0;}
+  .player-progress-bar{
+    background:#ffffff55;border-radius:999px;height:10px;overflow:hidden;margin-top:16px;
+  }
+  .player-progress-fill{background:var(--sage-deep);height:100%;width:0%;transition:width .25s ease;}
+  .player-progress-text{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#5c3a20;margin:8px 0 0;text-align:right;}
+
+  .player-item{
+    background:var(--card);border:1px solid var(--border);border-left:4px solid var(--peach);
+    border-radius:16px;padding:18px 20px;margin-bottom:14px;transition:opacity .2s ease, border-left-color .2s ease;
+  }
+  .player-item.done{opacity:.5;border-left-color:var(--sage-deep);}
+  .player-item.done h2{text-decoration:line-through;}
+  .player-item-head{display:flex;align-items:flex-start;gap:12px;cursor:pointer;}
+  .player-check{width:22px;height:22px;margin-top:4px;accent-color:var(--sage-deep);cursor:pointer;flex-shrink:0;}
+  .player-item-titles{flex:1;min-width:0;}
+  .player-muscle-tag{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--peach-deep);font-weight:700;
+  }
+  .player-item h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:19px;margin:2px 0 0;color:var(--ink);}
+  .player-prescription{
+    display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 14px;padding:10px 12px;
+    background:var(--sage-dim);border-radius:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink);
+  }
+  .player-prescription b{color:#3f5c2c;}
+  .player-video{position:relative;width:100%;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;}
+  .player-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .player-no-video{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);margin:0;}
+
+  .player-footer{
+    display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;
+    padding-top:16px;border-top:1px solid var(--border);text-align:center;flex-wrap:wrap;
+  }
+  .player-footer p{margin:0;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-dim);}
+  .player-footer a{color:var(--peach-deep);text-decoration:none;}
+  @media(max-width:480px){
+    .player-head{padding:20px;}
+    .player-head h1{font-size:24px;}
+    .player-item{padding:14px 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="player-wrap">
+  <div class="player-head">
+    <p class="player-eyebrow">The RunSpace — Workout Player</p>
+    <h1>${title}</h1>
+    ${dateLabel ? `<p class="player-date">${dateLabel}</p>` : ''}
+    <div class="player-progress-bar"><div class="player-progress-fill" id="progressFill"></div></div>
+    <p class="player-progress-text" id="progressText">0 / ${myWorkout.length} complete</p>
+  </div>
+
+  ${itemsHTML}
+
+  <div class="player-footer">
+    <p>© Copyright 2026. The RunSpace. All Rights Reserved. — <a href="https://therunspace.co.uk" target="_blank" rel="noopener">therunspace.co.uk</a></p>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'strengthlib_workout_progress';
+  function loadProgress(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; }
+  }
+  function saveProgress(p){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch(e){}
+  }
+  function updateProgressBar(){
+    const boxes = document.querySelectorAll('.player-check');
+    const total = boxes.length;
+    const done = document.querySelectorAll('.player-check:checked').length;
+    const pct = total ? Math.round((done/total)*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = done + ' / ' + total + ' complete';
+  }
+  const progress = loadProgress();
+  document.querySelectorAll('.player-check').forEach(box=>{
+    const id = box.getAttribute('data-id');
+    if(progress[id]){
+      box.checked = true;
+      box.closest('.player-item').classList.add('done');
+    }
+    box.addEventListener('change', ()=>{
+      progress[id] = box.checked;
+      saveProgress(progress);
+      box.closest('.player-item').classList.toggle('done', box.checked);
+      updateProgressBar();
+    });
+  });
+  updateProgressBar();
+<\/script>
+</body>
+</html>`;
+}
+
+function openWorkoutPlayer(){
+  if(myWorkout.length===0) return;
+  const html = buildWorkoutPlayerHTML();
+  const blob = new Blob([html], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
 
 function renderSheet(){
   const root = document.getElementById('sheetRoot');
@@ -1066,6 +1252,10 @@ function renderSheet(){
   const printBtn = el('button','btn-primary','🖨 Print / Save as PDF');
   printBtn.style.color = '#4a2c14';
   printBtn.onclick = ()=> window.print();
+  const playerBtn2 = el('button','btn-ghost','▶ Open Workout Player');
+  playerBtn2.style.color = 'var(--ink)';
+  playerBtn2.style.borderColor = 'var(--border)';
+  playerBtn2.onclick = openWorkoutPlayer;
   const copyBtn = el('button','btn-ghost','📋 Copy as text');
   copyBtn.style.color = 'var(--ink)';
   copyBtn.style.borderColor = 'var(--border)';
@@ -1089,6 +1279,7 @@ function renderSheet(){
   clearBtn2.style.borderColor = 'var(--border)';
   clearBtn2.onclick = clearWorkout;
   actions.appendChild(printBtn);
+  actions.appendChild(playerBtn2);
   actions.appendChild(copyBtn);
   actions.appendChild(clearBtn2);
   modal.appendChild(actions);
@@ -1113,7 +1304,7 @@ function renderMuscleGrid(){
   grid.innerHTML = '';
   MUSCLES.forEach(m=>{
     const b = el('button','muscle-btn'+(state.muscle===m?' active':''), m);
-    b.onclick = ()=>{ state.muscle = m; render(); };
+    b.onclick = ()=>{ state.muscle = (state.muscle===m ? null : m); render(); };
     grid.appendChild(b);
   });
 }
@@ -1125,7 +1316,7 @@ function renderGoalGrid(){
     const c = el('div','goal-card'+(state.goal===name?' active':''));
     c.appendChild(el('p','goal-name',name));
     c.appendChild(el('p','goal-meta', `<b>${g.reps}</b> reps · <b>${g.sets}</b> sets<br><b>${g.rest}</b> rest · ${g.rir} · RPE ${g.rpe}`));
-    c.onclick = ()=>{ state.goal = name; render(); };
+    c.onclick = ()=>{ state.goal = (state.goal===name ? null : name); render(); };
     grid.appendChild(c);
   });
 }
@@ -1347,8 +1538,11 @@ function renderSearchResults(){
   const wrap = document.getElementById('exerciseSearchResults');
   if(!wrap) return;
   const input = document.getElementById('exerciseSearchInput');
+  const clearBtn = document.getElementById('exerciseSearchClear');
   const q = (input && input.value || '').trim().toLowerCase();
   wrap.innerHTML = '';
+
+  if(clearBtn) clearBtn.classList.toggle('visible', q.length > 0);
 
   if(!q){
     return;
@@ -1461,6 +1655,14 @@ function render(){
 const searchInputEl = document.getElementById('exerciseSearchInput');
 if(searchInputEl){
   searchInputEl.addEventListener('input', renderSearchResults);
+}
+const searchClearEl = document.getElementById('exerciseSearchClear');
+if(searchClearEl){
+  searchClearEl.addEventListener('click', ()=>{
+    if(searchInputEl) searchInputEl.value = '';
+    renderSearchResults();
+    if(searchInputEl) searchInputEl.focus();
+  });
 }
 
 render();
