@@ -44,14 +44,20 @@
     margin-bottom:26px;
   }
   .hero::after{
-    content:'\1F986';
-    position:absolute;
-    right:24px;
-    top:20px;
-    font-size:56px;
-    opacity:.85;
-    transform:scaleX(-1);
-  }
+  content:'\1F986';
+  position:absolute;
+  right:24px;
+  top:20px;
+  font-size:56px;
+  opacity:.9;
+  transform:scaleX(-1);
+  text-shadow:
+    -1.5px -1.5px 0 #fff, 1.5px -1.5px 0 #fff,
+    -1.5px 1.5px 0 #fff, 1.5px 1.5px 0 #fff,
+    -1.5px 0 0 #fff, 1.5px 0 0 #fff,
+    0 -1.5px 0 #fff, 0 1.5px 0 #fff;
+  filter:drop-shadow(0 2px 3px #3d444633);
+}
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
     font-size:12px;
@@ -774,12 +780,6 @@
 
   <div class="workout-bar" id="workoutBar"></div>
 
-  <p class="section-label">Search by exercise name</p>
-  <div class="search-block">
-    <input type="text" id="exerciseSearchInput" class="exercise-search-input" placeholder="Search exercises… e.g. calf raise, lunge, plank">
-    <div id="exerciseSearchResults"></div>
-  </div>
-
   <p class="section-label">01 — Muscle Group</p>
   <div class="muscle-grid" id="muscleGrid"></div>
 
@@ -788,6 +788,12 @@
 
   <p class="section-label">03 — Equipment (optional)</p>
   <div class="equip-row" id="equipRow"></div>
+
+  <p class="section-label">Search by exercise name</p>
+  <div class="search-block">
+    <input type="text" id="exerciseSearchInput" class="exercise-search-input" placeholder="Search exercises… e.g. calf raise, lunge, plank">
+    <div id="exerciseSearchResults"></div>
+  </div>
 
   <div class="results-head">
     <div class="results-title">Your <span id="resultMuscle">—</span> options</div>
