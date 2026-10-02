@@ -1135,7 +1135,7 @@ button{transition:background .15s,border-color .15s;}
     </div></details></aside>
     <div class="library-main"><h2 class="library-view-heading" id="sessionLibraryTitle">All videos</h2>
       <div class="search-block"><label class="section-label" for="sessionSearchInput">Find a session or exercise</label><div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="sessionSearchInput" class="exercise-search-input" aria-controls="sessionResults" placeholder="Coach, session number, exercise…"><button type="button" id="sessionSearchClear" class="search-clear-btn" aria-label="Clear search">✕</button></div></div>
-      <a id="sessionPlaylistLink" class="playlist-link" target="_blank" rel="noopener noreferrer" hidden>View original playlist on YouTube</a><p id="sessionCollectionNote" class="search-hint" hidden></p><p id="sessionResultCount" class="search-hint" aria-live="polite"></p><div id="sessionResults" class="session-grid"></div>
+      <p id="sessionCollectionNote" class="search-hint" hidden></p><p id="sessionResultCount" class="search-hint" aria-live="polite"></p><div id="sessionResults" class="session-grid"></div>
     </div>
   </section>
 
@@ -2026,7 +2026,7 @@ function buildHubVideoCard(video,host){
   const meta=el('p','session-meta');meta.textContent=video.topics.map(t=>HUB_TOPICS[t].label).join(' · ');body.appendChild(meta);
   const title=el('h3','session-card-title');title.textContent=video.title;body.appendChild(title);
   const collection=el('p','session-source');collection.textContent=video.collections.map(id=>HUB_COLLECTIONS.find(c=>c.id===id).label).join(' · ');body.appendChild(collection);
-  const button=el('button','video-btn',sessionOpenVideo===video.id?'Close video':'Watch video');button.type='button';button.setAttribute('aria-expanded',sessionOpenVideo===video.id);button.onclick=toggle;body.appendChild(button);card.appendChild(body);
+  if(sessionOpenVideo===video.id){const close=el('button','video-btn','Close video');close.type='button';close.setAttribute('aria-label','Close '+video.title);close.onclick=toggle;body.appendChild(close);}card.appendChild(body);
   if(sessionOpenVideo===video.id){
     const panel=el('div','video-panel');const embed=el('div','video-embed');const iframe=document.createElement('iframe');
     iframe.src=`https://www.youtube.com/embed/${video.id}`;iframe.title=video.videoTitle;iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');iframe.setAttribute('allowfullscreen','');iframe.setAttribute('referrerpolicy','strict-origin-when-cross-origin');embed.appendChild(iframe);panel.appendChild(embed);appendVideoDetails(panel,video.id,video.details);
@@ -2085,7 +2085,6 @@ function renderSessionLibrary(){
   const selected=HUB_COLLECTIONS.find(c=>c.id===sessionCollection);
   document.getElementById('sessionLibraryTitle').textContent=hubTopic==='all'?(selected?.label||'All videos'):HUB_TOPICS[hubTopic].label;
   const note=document.getElementById('sessionCollectionNote');note.hidden=selected?.id!=='runna-emily';note.textContent=selected?.id==='runna-emily'?'YouTube labels two different videos as Session 1/26 in this collection. The original titles and playlist order are preserved.':'';
-  const link=document.getElementById('sessionPlaylistLink');link.hidden=!selected?.playlist;if(selected?.playlist)link.href=`https://www.youtube.com/playlist?list=${selected.playlist}`;
   const sources=document.getElementById('sessionCollections');sources.innerHTML='';
   const relevant=HUB_COLLECTIONS.filter(c=>HUB_VIDEOS.some(v=>v.collections.includes(c.id)&&(hubTopic==='all'||v.topics.includes(hubTopic))));
   for(const c of [{id:'',label:'All collections'},...relevant]){
