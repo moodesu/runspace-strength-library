@@ -1,9 +1,46 @@
 {
-  "sourceLessonRecords": 373,
-  "uniqueReferenceVideos": 221,
-  "explanations": 203,
-  "newVerifiedVideos": 26,
-  "catalogVideos": 322,
+  "strengthLessons": 712,
+  "strengthReferenceVideos": 286,
+  "strengthVideoDescriptions": 285,
+  "warmupLessons": 143,
+  "warmupUniqueVideos": 114,
+  "warmupVideoDescriptions": 114,
+  "catalogVideos": 330,
+  "uniqueVideoDescriptions": 326,
+  "excludedStrengthPairings": [
+    {
+      "lessonId": "a0d25099-2592-4657-90f5-d2ed3797caa1",
+      "title": "Single Leg Elevated Glute Bridge Hold",
+      "videoId": "W3UfoqNLja8",
+      "actualTitle": "Single Leg Elevated Hip Thrust"
+    },
+    {
+      "lessonId": "c04f53a8-a390-4987-b2f2-fdfb44607ec1",
+      "title": "Banded Squat",
+      "videoId": "QXwq5PLb0lw",
+      "actualTitle": "Banded Good Morrning"
+    },
+    {
+      "lessonId": "626a613f-2679-4d46-be50-aac0cd464df8",
+      "title": "Plank Pull Through",
+      "videoId": "xt3ZLjR64nU",
+      "actualTitle": "Shoulder Tap Plank"
+    }
+  ],
+  "unresolvedWarmupLessons": [
+    {
+      "lessonId": "00ca967d-546a-4c50-8483-f332a2bbe46a",
+      "title": "Redwood Post Run Yoga Session",
+      "categories": [
+        "Stretches",
+        "Routines & Combinations"
+      ],
+      "videoUrls": [],
+      "status": "needs_review",
+      "error": "Could not confirm this lesson's video.",
+      "capturedAt": "2026-10-02T10:22:55.386Z"
+    }
+  ],
   "unmappedExerciseLabels": [
     "Banded Kickback",
     "Barbell Soleus Calf Raises (all variations)",
@@ -19,15 +56,5 @@
     "Weighted Hamstring Glute Bridge March",
     "Weighted Lateral Raise",
     "Weighted Romanian Deadlift"
-  ],
-  "excludedPairs": [
-    {
-      "title": "Single Leg Elevated Glute Bridge Hold",
-      "videoId": "W3UfoqNLja8"
-    },
-    {
-      "title": "Banded Squat",
-      "videoId": "QXwq5PLb0lw"
-    }
   ]
 }

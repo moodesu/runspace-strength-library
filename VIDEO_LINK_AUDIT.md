@@ -1,14 +1,14 @@
 # Video link audit
 
-Updated 2026-10-02. Imported the partial GoKollab export: 373 lesson records, 221 distinct demonstration URLs and 203 distinct video explanations. Explanations are keyed by video ID and shown beneath the selected demonstration in browse, search and workout playback. Duplicate course lessons do not create duplicate video tabs. Missing explanations remain absent until another export is imported.
+Updated 2026-10-02. Strength: 712 source lessons, 286 distinct URLs, 285 video descriptions. Warm-up/mobility/drills/stretches: 143 source lessons, 142 successfully collected, 114 distinct videos with descriptions. Videos are deduplicated by ID while category membership is retained. Redwood Post Run Yoga Session could not be confirmed and is omitted.
 
-All 296 previously cataloged videos passed YouTube oEmbed checks earlier today. All 26 additional reference videos returned live metadata; the catalog now contains 322 videos. Added machine and cable demonstrations include OPEX Fitness videos provided by the GoKollab reference. Display labels use actual YouTube titles. This verifies destination metadata and availability, not exercise technique or future playback.
+The combined catalog contains 330 videos. Previous checks covered the original 296 plus 26 additional machine/cable videos. All eight new instructional videos returned live YouTube oEmbed metadata today. Availability and titles are verified, not movement technique or future playback.
 
-Two source pairings were excluded: Banded Squat pointing to Banded Good Morning, and Single Leg Elevated Glute Bridge Hold pointing to Single Leg Elevated Hip Thrust. Correct records for each movement remain. Source descriptions are preserved as plain text without inventing missing instructions.
+Excluded mismatched source pairings: Banded Squat -> Banded Good Morning; Single Leg Elevated Glute Bridge Hold -> Single Leg Elevated Hip Thrust; Plank Pull Through -> Shoulder Tap Plank. Valid records and existing correct mappings for these movements are retained. Original source records remain in data/ for review.
 
-The raw partial export and import audit are retained in data/ for incremental updates. Import future exports by lesson ID, preserve earlier nonempty details when a later record has none, and deduplicate demonstrations by video ID. Review conflicting movement titles before changing automatic mappings.
+Descriptions are keyed by video ID. Strength takes its own course descriptions; warm-up cards use their warm-up source descriptions where wording differs. Missing source explanations are not invented. Future imports should merge by lesson ID, retain older nonempty descriptions when absent from later records and review movement/title mismatches.
 
-## Current destinations
+## Strength destinations
 
 | Exercise | Demonstration page |
 | --- | --- |
@@ -58,7 +58,7 @@ The raw partial export and import audit are retained in data/ for incremental up
 | Bodyweight Double Leg Calf Raise | [Bodyweight Double Leg Calf Raise](https://www.youtube.com/watch?v=aK9J966YXto) |
 | Bodyweight Glute Bridge Hold | [Bodyweight Glute Bridge Hold](https://www.youtube.com/watch?v=bW4mS5gj1-s) |
 | Bodyweight Hip Thrust | [Bodyweight Hip Thrust](https://www.youtube.com/watch?v=TG154wGBp1A) |
-| Bodyweight Hip Thrust Pulse | [Bodyweight Hip Thrust Pulse](https://www.youtube.com/watch?v=ExyVZveewWA) |
+| Bodyweight Hip Thrust Pulse | [Bodyweight Hip Thrust Pulse](https://www.youtube.com/watch?v=ExyVZveewWA); [Bodyweight Hip Thrust Pulse](https://www.youtube.com/watch?v=rwWhMQ-qtQM) |
 | Bodyweight Lunge with Twist | [Bodyweight Lunge with Twist](https://www.youtube.com/watch?v=RLMCscJ7Tkk) |
 | Bodyweight Russian Twist | [Bodyweight Russian Twist](https://www.youtube.com/watch?v=5uK0zb-VwEA) |
 | Bodyweight Squat Calf Raise | [Bodyweight Squat Calf Raise](https://www.youtube.com/watch?v=sK94PhupFPw) |

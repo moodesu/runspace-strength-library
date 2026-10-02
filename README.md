@@ -1,39 +1,9 @@
-# The RunSpace — Strength Library
+# The RunSpace — Exercise libraries
 
-A single-page, self-contained interactive reference tool for The RunSpace's strength
-training exercises. Pick a muscle group and a training goal (Power / Strength /
-Hypertrophy / Endurance) to see matching exercises with sets, reps, rest and RPE,
-plus embedded YouTube form-check videos. Build a workout by adding exercises, then
-export an editable, printable workout sheet.
+A static strength and movement library with responsive cards, desktop filter rail, collapsible mobile filters, a browser-local workout builder, workout player and printable workout sheets. Strength and Warm-ups & mobility are separate views. The latter offers search and filters for heart-rate raisers, mobility routines, targeted mobility, running drills and stretches. Videos open on demand with their source exercise explanations.
 
-## Structure
+The strength export has 712 lesson records and 286 distinct videos with 285 available video descriptions. The warm-up export has 143 records, of which 142 were collected successfully: 114 distinct demonstrations with descriptions. Redwood Post Run Yoga Session remains unresolved and is not published. Repeated videos across course categories are shown once with combined categories.
 
-This is a static site — a single `index.html` file with everything (styles, data,
-and logic) inline. No build step, no dependencies, no server required.
+See VIDEO_LINK_AUDIT.md and data/gokollab-import-audit.json for destination checks, excluded source pairings and coverage. Source descriptions are rendered as plain text. Slightly different descriptions across the two courses are retained in their respective contexts.
 
-## Local preview
-
-```bash
-python3 -m http.server 8000
-```
-
-Then open `http://localhost:8000`.
-
-(Opening `index.html` directly via `file://` will break the embedded YouTube
-videos — browsers block third-party iframes from a `file://` origin.)
-
-## Deploying
-
-This repo deploys to Netlify with zero configuration — `netlify.toml` just points
-Netlify at the repo root. Connect the repo in the Netlify dashboard, or use the
-Netlify CLI:
-
-```bash
-netlify deploy --prod
-```
-
-## Data sources
-
-Exercise, muscle group, and reps/sets/rest data are transcribed from The RunSpace's
-PDF resources. Video links are matched from The RunSpace's YouTube "Strength
-library" playlist.
+Sites serves dist/index.html via .openai/hosting.json. The existing Netlify repository serves the equivalent index.html from the root. Browser-local workouts remain separate for each origin.
