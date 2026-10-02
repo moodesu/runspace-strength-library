@@ -1,0 +1,33 @@
+{
+  "sourceLessonRecords": 373,
+  "uniqueReferenceVideos": 221,
+  "explanations": 203,
+  "newVerifiedVideos": 26,
+  "catalogVideos": 322,
+  "unmappedExerciseLabels": [
+    "Banded Kickback",
+    "Barbell Soleus Calf Raises (all variations)",
+    "Bosu Ball Lunge",
+    "Cable Oblique Rotation in Lunge Position",
+    "Donkey Kicks",
+    "Farmer's Carry Heel Walks",
+    "Nordic Curl",
+    "Overhead Squat, Isometric Overhead Squat",
+    "Weighted Cossack Squat",
+    "Weighted Feet Elevated Squat",
+    "Weighted Good Morning",
+    "Weighted Hamstring Glute Bridge March",
+    "Weighted Lateral Raise",
+    "Weighted Romanian Deadlift"
+  ],
+  "excludedPairs": [
+    {
+      "title": "Single Leg Elevated Glute Bridge Hold",
+      "videoId": "W3UfoqNLja8"
+    },
+    {
+      "title": "Banded Squat",
+      "videoId": "QXwq5PLb0lw"
+    }
+  ]
+}
