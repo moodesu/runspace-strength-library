@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The RunSpace — Strength Library</title>
-<meta name="description" content="Find strength exercises by name, muscle group, or equipment. Watch matching demonstrations and build a printable workout.">
+<title>The RunSpace — Training Library</title>
+<meta name="description" content="Browse strength exercises, warm-ups, mobility, running drills and stretches. Watch demonstrations and build a strength workout.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -1003,6 +1003,20 @@ button{transition:background .15s,border-color .15s;}
 .warmup-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
 @media(max-width:1100px){.warmup-results{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:640px){.warmup-results{grid-template-columns:1fr;}.warmup-browse{display:none;}.library-nav{width:100%;}.library-view-tab{flex:1;padding:10px 12px;}.warmup-library-heading h2{font-size:23px;}}
+
+/* Both libraries share the same workspace and visual hierarchy. */
+.library-view-heading{margin:0 0 20px;font-size:24px;font-weight:700;letter-spacing:-.035em;line-height:1.35;}
+.warmup-categories{display:flex;flex-direction:column;gap:7px;margin:0;}
+.warmup-categories .equip-chip{width:100%;border-radius:8px;min-height:44px;background:#f8f9f6;color:var(--ink);text-align:left;}
+.warmup-categories .equip-chip.active{background:var(--ink);border-color:var(--ink);color:white;}
+.warmup-results{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.warmup-results-heading{margin:0 0 20px;}
+.warmup-results-heading h3{font-size:18px;line-height:1.35;margin:0 0 6px;font-weight:600;}
+.warmup-results-heading .search-hint{margin:0;}
+.library-nav{margin-bottom:24px;}
+@media(max-width:1100px) and (min-width:901px){.warmup-results{grid-template-columns:1fr;}}
+@media(max-width:900px){.warmup-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){.warmup-results{grid-template-columns:1fr;}.library-view-heading{font-size:22px;margin-bottom:18px;}.library-view-tab{font-size:14px;}.hero .library-count{white-space:normal;}.warmup-categories{grid-template-columns:1fr;}}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23f1ab7c%22/%3E%3Cpath%20d%3D%22M8%206h9a6%206%200%20010%2012h-9zm5%204v4h4a2%202%200%20000-4zm3%207%208%209h-7l-7-9z%22%20fill%3D%22%233d4446%22/%3E%3C/svg%3E">
 </head>
@@ -1010,13 +1024,13 @@ button{transition:background .15s,border-color .15s;}
 <div class="wrap">
 
   <header class="hero">
-    <div class="brand-lockup"><span class="brand-mark" aria-hidden="true">R<span>S</span></span><div><p class="eyebrow">The RunSpace</p><h1>Strength <span class="light">Library</span></h1></div></div>
+    <div class="brand-lockup"><span class="brand-mark" aria-hidden="true">R<span>S</span></span><div><p class="eyebrow">The RunSpace</p><h1>Training <span class="light">Library</span></h1></div></div>
     <p class="library-count" id="libraryCount"></p>
   </header>
 
   <nav class="library-nav" aria-label="Exercise libraries">
     <button type="button" id="strengthTab" class="library-view-tab active" aria-pressed="true">Strength</button>
-    <button type="button" id="warmupTab" class="library-view-tab" aria-pressed="false">Warm-ups &amp; mobility</button>
+    <button type="button" id="warmupTab" class="library-view-tab" aria-pressed="false">Warm-ups, drills &amp; stretches</button>
   </nav>
   <div class="workout-bar" id="workoutBar"></div>
 
@@ -1037,6 +1051,7 @@ button{transition:background .15s,border-color .15s;}
     </aside>
 
     <main class="library-main">
+      <h2 class="library-view-heading">Strength</h2>
       <div class="search-block">
         <label class="section-label" for="exerciseSearchInput">Find an exercise</label>
         <div class="search-input-wrap">
@@ -1046,11 +1061,7 @@ button{transition:background .15s,border-color .15s;}
         </div>
       </div>
 
-      <button type="button" class="warmup-card warmup-entry" id="exploreWarmups">
-        <span class="warmup-symbol" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></span>
-        <span><strong>Warm-ups, drills &amp; stretches</strong><span class="warmup-entry-caption">114 demonstrations with exercise details</span></span>
-        <span class="warmup-browse">Browse</span>
-      </button>
+
 
       <div id="exerciseSearchResults" aria-live="polite"></div>
       <div class="results-head">
@@ -1061,13 +1072,30 @@ button{transition:background .15s,border-color .15s;}
     </main>
   </div>
 
-  <section id="warmupLibrary" class="warmup-library" hidden aria-labelledby="warmupLibraryTitle">
-    <div class="warmup-library-heading"><h2 id="warmupLibraryTitle">Warm-ups, drills &amp; stretches</h2><p>Movement preparation, mobility and running technique.</p></div>
-    <label class="section-label" for="warmupSearchInput">Find a demonstration</label>
-    <div class="search-input-wrap"><input type="search" id="warmupSearchInput" class="exercise-search-input warmup-search" placeholder="Search warm-ups, mobility, drills…" aria-controls="warmupResults"></div>
-    <div id="warmupCategories" class="warmup-categories" aria-label="Filter warm-up categories"></div>
-    <p id="warmupResultCount" class="search-hint" aria-live="polite"></p>
-    <div id="warmupResults" class="warmup-results"></div>
+  <section id="warmupLibrary" class="library-layout" hidden aria-labelledby="warmupLibraryTitle">
+    <aside class="library-sidebar" aria-label="Warm-up and mobility filters">
+      <details class="filter-panel" id="warmupFilterPanel" open>
+        <summary>Exercise filters <span class="filter-summary" id="warmupFilterSummary">All categories</span></summary>
+        <div class="filter-content">
+          <div class="filter-heading"><span>Find your focus</span><button type="button" class="btn-ghost" id="resetWarmupFilters">Clear</button></div>
+          <p class="section-label">Category</p>
+          <div id="warmupCategories" class="warmup-categories" aria-label="Filter warm-up categories"></div>
+        </div>
+      </details>
+    </aside>
+    <div class="library-main">
+      <h2 class="library-view-heading" id="warmupLibraryTitle">Warm-ups, drills &amp; stretches</h2>
+      <div class="search-block">
+        <label class="section-label" for="warmupSearchInput">Find an exercise or guide</label>
+        <div class="search-input-wrap">
+          <svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <input type="search" id="warmupSearchInput" class="exercise-search-input" placeholder="Heel kick, hip mobility, running form…" aria-controls="warmupResults">
+          <button type="button" id="warmupSearchClear" class="search-clear-btn" aria-label="Clear search" title="Clear search">✕</button>
+        </div>
+      </div>
+      <div class="warmup-results-heading"><h3 id="warmupGroupTitle">All categories</h3><p id="warmupResultCount" class="search-hint" aria-live="polite"></p></div>
+      <div id="warmupResults" class="warmup-results"></div>
+    </div>
   </section>
 
   <details class="note" id="trainingNotes"><summary>Training notes &amp; workout guide</summary><div class="note-content">
@@ -1908,6 +1936,9 @@ function showLibrary(view){
 function renderWarmups(){
   const query=normalizeExercise(document.getElementById('warmupSearchInput').value||'');
   const terms=query.split(' ').filter(Boolean);
+  document.getElementById('warmupSearchClear').classList.toggle('visible',!!query);
+  document.getElementById('warmupFilterSummary').textContent=WARMUP_GROUP_LABELS[warmupGroup]||'All categories';
+  document.getElementById('warmupGroupTitle').textContent=WARMUP_GROUP_LABELS[warmupGroup]||'All categories';
   const categories=document.getElementById('warmupCategories');categories.innerHTML='';
   const groups=Object.keys(WARMUP_GROUP_LABELS);
   for(const group of ['',...groups]){
@@ -1919,7 +1950,7 @@ function renderWarmups(){
     categories.appendChild(button);
   }
   const matches=WARMUP_VIDEOS.filter(v=>(!warmupGroup||v.categories.some(c=>c[0]===warmupGroup))&&terms.every(t=>normalizeExercise(v.title+' '+v.videoTitle+' '+v.categories.flat().join(' ')).includes(t)));
-  document.getElementById('warmupResultCount').textContent=`${matches.length} demonstration${matches.length===1?'':'s'}`;
+  document.getElementById('warmupResultCount').textContent=`${matches.length} video${matches.length===1?'':'s'}`;
   const results=document.getElementById('warmupResults');results.innerHTML='';
   if(!matches.length){results.appendChild(el('p','empty','No demonstrations match. Try fewer words or select All.'));return;}
   for(const video of matches){
@@ -1950,12 +1981,13 @@ function renderWarmups(){
 }
 document.getElementById('strengthTab').onclick=()=>showLibrary('strength');
 document.getElementById('warmupTab').onclick=()=>showLibrary('warmups');
-document.getElementById('exploreWarmups').onclick=()=>showLibrary('warmups');
+document.getElementById('resetWarmupFilters').onclick=()=>{warmupGroup='';openWarmupVideo=null;renderWarmups();};
+document.getElementById('warmupSearchClear').onclick=()=>{document.getElementById('warmupSearchInput').value='';openWarmupVideo=null;renderWarmups();document.getElementById('warmupSearchInput').focus();};
 document.getElementById('warmupSearchInput').addEventListener('input',()=>{openWarmupVideo=null;renderWarmups();});
 renderWarmups();
 
-document.getElementById('libraryCount').textContent = `${new Set(SEARCH_INDEX.map(h=>h.exercise)).size} exercises · ${VIDEOS.length} demonstrations`;
-if(window.matchMedia?.('(max-width: 900px)').matches) document.getElementById('filterPanel').open=false;
+document.getElementById('libraryCount').textContent = `${VIDEOS.length} videos · Strength & movement`;
+if(window.matchMedia?.('(max-width: 900px)').matches){document.getElementById('filterPanel').open=false;document.getElementById('warmupFilterPanel').open=false;}
 render();
 </script>
 </body>
