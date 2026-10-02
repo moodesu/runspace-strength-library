@@ -1056,6 +1056,8 @@ button{transition:background .15s,border-color .15s;}
 .library-view-tab.builder-nav{flex:0 1 auto;background:#f8e2d2;color:var(--ink);border-left:1px solid #e2b695;}
 .library-view-tab.builder-nav.active{background:#d6794d;color:white;border-color:#d6794d;}
 @media(max-width:640px){.library-view-tab.builder-nav{grid-column:1/-1;}}
+.search-clear-btn{width:auto;min-width:58px;height:40px;padding:0 10px;border-radius:8px;font-size:14px;font-weight:600;}
+.exercise-search-input{padding-right:82px;}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
@@ -1080,7 +1082,7 @@ button{transition:background .15s,border-color .15s;}
     <div class="hub-heading"><h2 id="hubTitle">What are you training today?</h2><button type="button" class="btn-ghost" id="allVideosButton">All videos</button></div>
     <div class="search-block hub-search">
       <label class="section-label" for="hubSearchInput">Search the whole library</label>
-      <div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="hubSearchInput" class="exercise-search-input" aria-controls="hubSearchResults" placeholder="Yoga, calf stretch, Coach Christie…"><button type="button" id="hubSearchClear" class="search-clear-btn" aria-label="Clear search">✕</button></div>
+      <div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="hubSearchInput" class="exercise-search-input" aria-controls="hubSearchResults" placeholder="Yoga, calf stretch, Coach Christie…"><button type="button" id="hubSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div>
     </div>
     <p id="hubSearchCount" class="search-hint" aria-live="polite"></p><div id="hubSearchResults" class="session-grid" hidden></div>
     <div id="hubBrowse"><div id="hubTopicCards" class="hub-topic-grid"></div><div class="hub-heading"><h2>Guided collections</h2></div><div id="hubCollections" class="collection-grid"></div></div>
@@ -1110,7 +1112,7 @@ button{transition:background .15s,border-color .15s;}
         <div class="search-input-wrap">
           <svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
           <input type="search" id="exerciseSearchInput" aria-controls="exerciseSearchResults" class="exercise-search-input" placeholder="Calf raise, lunge, plank…">
-          <button type="button" id="exerciseSearchClear" class="search-clear-btn" aria-label="Clear search" title="Clear search">✕</button>
+          <button type="button" id="exerciseSearchClear" class="search-clear-btn" aria-label="Clear search" title="Clear search">Clear</button>
         </div>
       </div>
 
@@ -1127,14 +1129,13 @@ button{transition:background .15s,border-color .15s;}
 
   <section id="sessionLibrary" class="library-layout" hidden aria-labelledby="sessionLibraryTitle">
     <aside class="library-sidebar" aria-label="Video filters"><details class="filter-panel" id="sessionFilterPanel" open><summary>Video filters <span class="filter-summary" id="sessionFilterSummary">All collections</span></summary><div class="filter-content">
-      <div class="filter-heading"><span>Find a session</span><button type="button" class="btn-ghost" id="resetSessionFilters">Clear</button></div>
       <p class="section-label">Collection</p><div id="sessionCollections" class="session-collections"></div>
       <div id="sessionFocusFilter" hidden><label class="section-label" for="sessionFocus">Focus</label><select id="sessionFocus" class="session-select"><option value="">All focuses</option></select></div>
       <label class="section-label" for="sessionFormat">Format</label><select id="sessionFormat" class="session-select"><option value="">All formats</option><option value="session">Full sessions</option><option value="exercise">Exercises &amp; tutorials</option></select>
       <label class="section-label" for="sessionDuration">Video length</label><select id="sessionDuration" class="session-select"><option value="">Any length</option><option value="short">Up to 10 minutes</option><option value="medium">Over 10 to 30 minutes</option><option value="long">Over 30 minutes</option></select>
     </div></details></aside>
     <div class="library-main"><h2 class="library-view-heading" id="sessionLibraryTitle">All videos</h2>
-      <div class="search-block"><label class="section-label" for="sessionSearchInput">Find a session or exercise</label><div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="sessionSearchInput" class="exercise-search-input" aria-controls="sessionResults" placeholder="Coach, session number, exercise…"><button type="button" id="sessionSearchClear" class="search-clear-btn" aria-label="Clear search">✕</button></div></div>
+      <div class="search-block"><label class="section-label" for="sessionSearchInput">Find a session or exercise</label><div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="sessionSearchInput" class="exercise-search-input" aria-controls="sessionResults" placeholder="Coach, session number, exercise…"><button type="button" id="sessionSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div></div>
       <p id="sessionCollectionNote" class="search-hint" hidden></p><p id="sessionResultCount" class="search-hint" aria-live="polite"></p><div id="sessionResults" class="session-grid"></div>
     </div>
   </section>
@@ -2120,7 +2121,6 @@ document.getElementById('hubSearchInput').addEventListener('input',()=>{sessionO
 document.getElementById('hubSearchClear').onclick=()=>{document.getElementById('hubSearchInput').value='';sessionOpenVideo=null;renderHub();document.getElementById('hubSearchInput').focus();};
 document.getElementById('sessionSearchInput').addEventListener('input',()=>{sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionSearchClear').onclick=()=>{document.getElementById('sessionSearchInput').value='';sessionOpenVideo=null;renderSessionLibrary();document.getElementById('sessionSearchInput').focus();};
-document.getElementById('resetSessionFilters').onclick=resetSessionFilters;
 document.getElementById('sessionFocus').addEventListener('change',e=>{sessionFocus=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionFormat').addEventListener('change',e=>{sessionFormat=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionDuration').addEventListener('change',e=>{sessionDuration=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
