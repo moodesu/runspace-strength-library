@@ -1,36 +1,12 @@
 # Video link audit
 
-Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returned available video metadata, every live title matched its stored title, and every author was Cat at The RunSpace. This checks destination metadata and availability; it is not a frame-by-frame review of exercise technique or a guarantee of future playback.
+Updated 2026-10-02. Imported the partial GoKollab export: 373 lesson records, 221 distinct demonstration URLs and 203 distinct video explanations. Explanations are keyed by video ID and shown beneath the selected demonstration in browse, search and workout playback. Duplicate course lessons do not create duplicate video tabs. Missing explanations remain absent until another export is imported.
 
-23 exercise mappings revised. 163 of 191 exercise labels have matching or explicitly titled variation demos; 28 have no suitable catalog match. Missing demos remain unattached rather than linking to a different movement.
+All 296 previously cataloged videos passed YouTube oEmbed checks earlier today. All 26 additional reference videos returned live metadata; the catalog now contains 322 videos. Added machine and cable demonstrations include OPEX Fitness videos provided by the GoKollab reference. Display labels use actual YouTube titles. This verifies destination metadata and availability, not exercise technique or future playback.
 
-## Revised mappings
+Two source pairings were excluded: Banded Squat pointing to Banded Good Morning, and Single Leg Elevated Glute Bridge Hold pointing to Single Leg Elevated Hip Thrust. Correct records for each movement remain. Source descriptions are preserved as plain text without inventing missing instructions.
 
-| Exercise | Previous demonstration | Current demonstration |
-| --- | --- | --- |
-| Barbell Soleus Calf Raises (all variations) | Barbell Calf Raise | No matched demo |
-| Farmer's Carry Heel Walks | Kettlebell Farmer's Carry | No matched demo |
-| Heel Walks | No matched demo | Heel Walk |
-| Banded Dorsi-flexion/Plantarflexion | Banded Plantarflexion | Seated Banded Dorsiflexion; Banded Plantarflexion |
-| Hamstring Curl Machine | Seated Banded Hamstring Curl | No matched demo |
-| Banded Good Morning | Barbell Good Morning | Banded Good Morrning |
-| Weighted Good Morning | Barbell Good Morning | No matched demo |
-| Weighted Romanian Deadlift | Barbell Romanian Deadlift | No matched demo |
-| Weighted Feet Elevated Squat | Barbell Heels Elevated Weighted Squat | No matched demo |
-| Weighted Hamstring Glute Bridge March | Hamstring Glute Bridge March | No matched demo |
-| Overhead Squat, Isometric Overhead Squat | Unilateral Overhead Squat | No matched demo |
-| Weighted Cossack Squat | Cossack Squat | No matched demo |
-| Weighted Lateral Raise | Elevated Weighted Calf Raise | No matched demo |
-| Jumping Lunge | No matched demo | Lunge Jumps |
-| Jumping Squat, Box Jump | Box Jump | Squat Jump; Box Jump |
-| Lunge (all variations) | Lunge Jumps | Alternating Bodyweight Forwards Lunge; Alternating Bodyweight Backwards Lunge; Bodyweight Lateral Lunge; Bodyweight Curtsy Lunge |
-| Weighted Squat (all variations) | Barbell Heels Elevated Weighted Squat | Goblet Squat; Goblet Sumo Squat |
-| Weighted Lunge (all variations) | Front Leg Elevated Weighted Lunge | Kettlebell Alternating Lunge; Kettlebell Backwards Lunge; Goblet Lateral Lunge; Goblet Curtsy Lunge |
-| Weighted Deadlift (including sumo) | No matched demo | Kettlebell Deadlift; Single Leg Kettlebell Deadlift |
-| Calf Raises (all variations) | No matched demo | Bodyweight Double Leg Calf Raise; Single Leg Bodyweight Calf Raise; Single Leg Elevated Calf Raise |
-| Soleus Calf Raises (all variations) | No matched demo | Double Leg Bodyweight Soleus Calf Raise; Single Leg Bodyweight Soleus Calf Raise; Double Leg Elevated Soleus Calf Raise; Single Leg Elevated Soleus Calf Raise |
-| Weighted Calf Raises (all variations) | Elevated Weighted Calf Raise | Elevated Weighted Calf Raise; Single legged Weighted Calf Raise; Kettlebell Double-Legged Calf Raise |
-| Push Ups (including Box, Knees, Eccentric) | Box Push Ups | Box Push Ups; Knee Press Ups; Eccentric Press Up |
+The raw partial export and import audit are retained in data/ for incremental updates. Import future exports by lesson ID, preserve earlier nonempty details when a later record has none, and deduplicate demonstrations by video ID. Review conflicting movement titles before changing automatic mappings.
 
 ## Current destinations
 
@@ -39,7 +15,7 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Alternating Bicep Curl | [Alternating Bicep Curl](https://www.youtube.com/watch?v=A3FrGCdoMUw) |
 | Alternating Low Row | [Alternating Low Row](https://www.youtube.com/watch?v=hRCm8O5qlWs) |
 | Australian Pull Up | [Australian Pull Up](https://www.youtube.com/watch?v=iuHA7nheZL8) |
-| Back Extension Machine | No matched demo |
+| Back Extension Machine | [Roman Chair Back Extension](https://www.youtube.com/watch?v=ZaLvgeHC_54) |
 | Band Assisted Chin Up | [Band Assisted Chin Up](https://www.youtube.com/watch?v=imYpShnj0l4) |
 | Band Assisted Pull Up | [Band Assisted Pull Up](https://www.youtube.com/watch?v=Dq54p8mnGcU) |
 | Band Pull-Together | [Band Pull-Together](https://www.youtube.com/watch?v=nT6uIaYVXdQ) |
@@ -93,13 +69,13 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Bosu Ball Single Leg Calf Raise | [Bosu Ball Single Leg Calf Raise](https://www.youtube.com/watch?v=vUKrcDCvaL8) |
 | Bosu Ball Split Squat | [Bosu Ball Split Squat](https://www.youtube.com/watch?v=UZKCvdDAwB8) |
 | Bosu Ball Squat | [Bosu Ball Squat](https://www.youtube.com/watch?v=AstWtBDHNVM) |
-| Cable Adduction/Abduction (or machine) | No matched demo |
-| Cable Lateral Raise | No matched demo |
-| Cable Machine Kickback | No matched demo |
-| Cable Machine Oblique Rotation (twist, high-low, low-high) | No matched demo |
-| Cable Machine Tricep Push Downs | No matched demo |
+| Cable Adduction/Abduction (or machine) | [Cable Hip Abduction](https://www.youtube.com/watch?v=WLwzA9S2aek); [Hip Adduction Machine](https://www.youtube.com/watch?v=3DaEZ0Er6cU); [Hip Abduction Machine](https://www.youtube.com/watch?v=pVGCaMmxuEg) |
+| Cable Lateral Raise | [Cable Lateral Raise](https://www.youtube.com/watch?v=dQPTeeqgJqA) |
+| Cable Machine Kickback | [Cable Glute Kickback](https://www.youtube.com/watch?v=iElJ4Ngx--k) |
+| Cable Machine Oblique Rotation (twist, high-low, low-high) | [Cable Oblique Rotation](https://www.youtube.com/watch?v=rB0GwKy8UMg); [High to Low Cable Oblique Rotation](https://www.youtube.com/watch?v=KnbgKcvOG_c); [Low to High Cable Oblique Rotation](https://www.youtube.com/watch?v=Z88U7SWhGXc) |
+| Cable Machine Tricep Push Downs | [Rope Cable Tricep Pushdown](https://www.youtube.com/watch?v=y6EdXBdL75A) |
 | Cable Oblique Rotation in Lunge Position | No matched demo |
-| Cable Seated Row | No matched demo |
+| Cable Seated Row | [Seated Rope Cable Row](https://www.youtube.com/watch?v=mrjFwU3dlCs) |
 | Calf Raises (all variations) | [Bodyweight Double Leg Calf Raise](https://www.youtube.com/watch?v=aK9J966YXto); [Single Leg Bodyweight Calf Raise](https://www.youtube.com/watch?v=wqWdXcL_XNM); [Single Leg Elevated Calf Raise](https://www.youtube.com/watch?v=kzT-c2_2dkQ) |
 | Chin Up | [Chin Up](https://www.youtube.com/watch?v=LGxeHzrY6G4) |
 | Clamshell | [Clamshell](https://www.youtube.com/watch?v=FbAiyx_ma_4) |
@@ -127,7 +103,7 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Goblet Squat with Calf Raise | [Goblet Squat with Calf Raise](https://www.youtube.com/watch?v=du--yeaLAEg) |
 | Goblet Sumo Squat | [Goblet Sumo Squat](https://www.youtube.com/watch?v=48uG6eGdL_0) |
 | Half-Star Plank (legs only) | [Half-Star Plank (legs only)](https://www.youtube.com/watch?v=ItEGHjlzy2w) |
-| Hamstring Curl Machine | No matched demo |
+| Hamstring Curl Machine | [Seated Hamstring Curl Machine](https://www.youtube.com/watch?v=ceG0f6ntNcw) |
 | Hamstring Glute Bridge March | [Hamstring Glute Bridge March](https://www.youtube.com/watch?v=mkNc8grZCfY) |
 | Hamstring Walkout | [Bodyweight Hamstring Walkout](https://www.youtube.com/watch?v=emQsgmBuIj4) |
 | Heel Walks | [Heel Walk](https://www.youtube.com/watch?v=Z2tNhpqNuB8) |
@@ -151,12 +127,12 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Kettlebell Step Up | [Kettlebell Step Up](https://www.youtube.com/watch?v=MW2DH7_MJwg) |
 | Knee Side Plank | [Knee Side Plank](https://www.youtube.com/watch?v=TmXkenAhqvI) |
 | Lap Weighted Wall Sit | [Lap Weighted Wall Sit](https://www.youtube.com/watch?v=8wcX4mU2kBE) |
-| Lat Pull Down Machine | No matched demo |
+| Lat Pull Down Machine | [Wide Grip Cable Lat Pulldown Machine](https://www.youtube.com/watch?v=r9xoBR4-ZNk) |
 | Lateral Powerbag Step Up | [Lateral Powerbag Step Up](https://www.youtube.com/watch?v=9muL9bxpQ7g) |
 | Lateral Step Up | [Lateral Step Up](https://www.youtube.com/watch?v=mwdkWRUiEEY) |
-| Leg Extension Machine | No matched demo |
-| Leg Press / Hack Squat Machine | No matched demo |
-| Leg Press, Hack Squat Machine | No matched demo |
+| Leg Extension Machine | [Leg Extension Machine](https://www.youtube.com/watch?v=s1JfTvyWdTs) |
+| Leg Press / Hack Squat Machine | [Leg Press Machine Press](https://www.youtube.com/watch?v=B8KqmwdomoU) |
+| Leg Press, Hack Squat Machine | [Leg Press Machine Press](https://www.youtube.com/watch?v=B8KqmwdomoU) |
 | Lunge (all variations) | [Alternating Bodyweight Forwards Lunge](https://www.youtube.com/watch?v=qBeFn2dYh1w); [Alternating Bodyweight Backwards Lunge](https://www.youtube.com/watch?v=j3GYBY6pOgk); [Bodyweight Lateral Lunge](https://www.youtube.com/watch?v=HiD8TeE4DQo); [Bodyweight Curtsy Lunge](https://www.youtube.com/watch?v=M9rpTxEbsD8) |
 | Lunge with Calf Raise | [Lunge with Calf Raise](https://www.youtube.com/watch?v=-wcZ3k0_0cY) |
 | Lunge with Knee Drive | [Lunge with Knee Drive](https://www.youtube.com/watch?v=7rpoctSgfy8) |
@@ -181,7 +157,7 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Side Squat Walk | [Side Squat Walk](https://www.youtube.com/watch?v=IMPlfGq-IXM) |
 | Side Step Downs | [Side Step Downs](https://www.youtube.com/watch?v=AxAeFCoclPo) |
 | Single Leg Barbell Hip Thrust | [Single Leg Barbell Hip Thrust](https://www.youtube.com/watch?v=LTspEehdO5g) |
-| Single Leg Bodyweight Calf Raise | [Single Leg Bodyweight Calf Raise](https://www.youtube.com/watch?v=wqWdXcL_XNM) |
+| Single Leg Bodyweight Calf Raise | [Single Leg Bodyweight Calf Raise](https://www.youtube.com/watch?v=wqWdXcL_XNM); [Single Leg Bodyweight Calf Raise](https://www.youtube.com/watch?v=7qrvocT-TYU) |
 | Single Leg Bodyweight Calf Raise (2) | [Single Leg Bodyweight Calf Raise](https://www.youtube.com/watch?v=7qrvocT-TYU) |
 | Single Leg Bodyweight Soleus Calf Raise | [Single Leg Bodyweight Soleus Calf Raise](https://www.youtube.com/watch?v=X8l4cEFmMys) |
 | Single Leg Elevated Calf Raise | [Single Leg Elevated Calf Raise](https://www.youtube.com/watch?v=kzT-c2_2dkQ) |
@@ -194,8 +170,8 @@ Checked on 2026-10-02 using YouTube oEmbed metadata. All 296 catalog IDs returne
 | Single Legged Heel Drops | [Single Legged Heel Drops](https://www.youtube.com/watch?v=d7PgaYifG9Q) |
 | Single legged Weighted Calf Raise | [Single legged Weighted Calf Raise](https://www.youtube.com/watch?v=3H-3h0uqwK8) |
 | Sit-up Press | [Sit-up Press](https://www.youtube.com/watch?v=RCk9y5866rU) |
-| Sled Drag, Reverse Sled Drag | No matched demo |
-| Sled Push, Sled Drag | No matched demo |
+| Sled Drag, Reverse Sled Drag | [Reverse Sled Drag](https://www.youtube.com/watch?v=EOa0-MNaw6k) |
+| Sled Push, Sled Drag | [Sled Push](https://www.youtube.com/watch?v=rB4LFuZM_i8); [Reverse Sled Drag](https://www.youtube.com/watch?v=EOa0-MNaw6k) |
 | Slow Eccentric Lateral Step Downs | [Slow Eccentric Lateral Step Downs](https://www.youtube.com/watch?v=OUrWkJZiuwY) |
 | Soleus Calf Raises (all variations) | [Double Leg Bodyweight Soleus Calf Raise](https://www.youtube.com/watch?v=1QAny_nnHJ0); [Single Leg Bodyweight Soleus Calf Raise](https://www.youtube.com/watch?v=X8l4cEFmMys); [Double Leg Elevated Soleus Calf Raise](https://www.youtube.com/watch?v=I9zMcH-Jh3M); [Single Leg Elevated Soleus Calf Raise](https://www.youtube.com/watch?v=cST7KazA-Wc) |
 | Split Squat Pulse | [Split Squat Pulse](https://www.youtube.com/watch?v=NwivUu_ZeXs) |
