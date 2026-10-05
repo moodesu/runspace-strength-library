@@ -1209,6 +1209,8 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 
 
 .gen-exercise>.video-panel{margin-top:18px;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);gap:18px;}.gen-exercise>.video-panel>.video-details{grid-column:1;}.gen-exercise>.video-panel .video-embed{max-width:760px;width:100%;}
+
+#additionalBuilderVideos{margin-top:34px;border-top:1px solid var(--border);padding-top:24px;}.additional-heading{font:400 28px/1.3 Georgia,serif;margin:0 0 10px;}.additional-muscle-group{margin:24px 0;}.additional-muscle-group>h4{font:500 15px/1.4 'Inter',Arial,sans-serif;margin:0;padding:0 0 12px;border-bottom:1px solid var(--border);}.additional-video{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:center;border-bottom:1px solid var(--border);padding:18px 0;}.additional-video-info h5{font:400 21px/1.35 Georgia,serif;margin:0;}.additional-video-actions{display:flex;gap:15px;align-items:center;}.additional-video-actions button{font-size:14px;white-space:nowrap;}.additional-video>.video-panel{grid-column:1/-1;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);}.additional-video>.video-panel .video-embed{max-width:760px;width:100%;}.additional-video>.video-panel .video-details{grid-column:1;}@media(max-width:640px){.additional-video{grid-template-columns:1fr;}.additional-video-actions{justify-content:flex-start;}.additional-video-actions button{padding-left:0;}.additional-heading{font-size:25px;}}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
@@ -1286,6 +1288,7 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
         <div class="prescription" id="prescriptionBox">Choose a training goal for sets and reps.</div>
       </div>
       <div id="results"></div>
+      <section id="additionalBuilderVideos" aria-label="Additional strength and stretching videos"></section>
     </main>
   </div>
 
@@ -1382,7 +1385,7 @@ try { myWorkout = JSON.parse(localStorage.getItem('strengthlib_workout') || '[]'
 // migrate older saved items that don't have editable prescription fields yet
 myWorkout.forEach(w=>{
   const currentVideos=getVideosFor(w.exercise);
-  if(w.videoId && !currentVideos.includes(w.videoId)) w.videoId=currentVideos[0]||null;
+  if(!w.libraryVideo && w.videoId && !currentVideos.includes(w.videoId)) w.videoId=currentVideos[0]||null;
   const g = GOALS[w.goal] || GOALS.Endurance;
   if(w.sets===undefined) w.sets = g.sets;
   if(w.reps===undefined) w.reps = g.reps;
@@ -1546,7 +1549,7 @@ function openWorkoutPlayer(){
     item.appendChild(headRow);
 
     const prescription = el('div','player-prescription');
-    prescription.innerHTML = `<span><b>${w.goal}</b></span><span>${w.sets} sets</span><span>${w.reps} reps</span><span>${w.rir}</span><span>${w.rest} rest</span>`;
+    if(w.libraryVideo&&w.kind==='session'){prescription.textContent=`Follow-along session · ${w.duration||'Follow the video'} · ${w.rest}`;}else if(w.libraryVideo&&w.kind==='stretch'){prescription.textContent=`Stretching tutorial · ${w.reps} · ${w.sets} set(s) · ${w.rest}`;}else prescription.innerHTML = `<span><b>${w.goal}</b></span><span>${w.sets} sets</span><span>${w.reps} reps</span><span>${w.rir}</span><span>${w.rest} rest</span>`;
     item.appendChild(prescription);
 
     if(w.videoId){
@@ -1607,7 +1610,7 @@ function renderSheet(){
 
   const table = el('table','sheet-table');
   table.innerHTML = `<thead><tr>
-    <th>Muscle</th><th>Exercise</th><th>Goal</th><th>Sets</th><th>Reps</th><th>RiR/RPE</th><th>Rest</th><th></th>
+    <th>Muscle</th><th>Exercise</th><th>Goal</th><th>Sets</th><th>Reps / duration</th><th>RiR/RPE</th><th>Rest</th><th></th>
   </tr></thead>`;
   const tbody = el('tbody');
   myWorkout.forEach(w=>{
@@ -1669,7 +1672,7 @@ function renderSheet(){
     lines.push('— Training Hub —','');
     myWorkout.forEach(w=>{
       lines.push(`${w.muscle} — ${w.exercise}`);
-      lines.push(`  ${w.goal}: ${w.sets} sets x ${w.reps} reps, ${w.rir}, ${w.rest} rest`);
+      if(w.libraryVideo&&w.kind==='session')lines.push(`  Follow-along session: ${w.duration||'Follow the video'}, ${w.rest}`);else if(w.libraryVideo&&w.kind==='stretch')lines.push(`  Stretching: ${w.sets} set(s), ${w.reps}, ${w.rest}`);else lines.push(`  ${w.goal}: ${w.sets} sets x ${w.reps} reps, ${w.rir}, ${w.rest} rest`);
       if(w.videoId) lines.push(`  Video (${VIDEO_LOOKUP[w.videoId] || 'untitled'}): https://www.youtube.com/watch?v=${w.videoId}`);
       lines.push('');
     });
@@ -2125,6 +2128,7 @@ function renderLibraryView(view){
   sessionOpenVideo=null;document.getElementById('hubSearchResults').innerHTML='';document.getElementById('sessionResults').innerHTML='';
   if(!builder){generatorOpenVideo=null;renderGeneratorDraft();openVideoPanels={};openSearchVideoPanels={};renderResults();renderSearchResults();}
   if(builder)renderGeneratorDraft();
+  renderAdditionalBuilderVideos();
   if(hub)renderHub();
   if(!(builder||hub))renderSessionLibrary();
 }
@@ -2428,11 +2432,78 @@ document.getElementById('genGenerate').onclick=generateWorkoutDraft;
 
 for(const id of ['genFocus','genTime','genGoal','genPrep',...Object.keys(GENERATOR_EQUIPMENT).map(k=>'genEquip-'+k)])document.getElementById(id).addEventListener('change',()=>{if(generatorDraft)document.getElementById('genStatus').textContent='Settings changed. Generate again to apply them to a new draft.';});
 
+// Supplemental strength and stretching videos share the builder's muscle/search filters.
+const ADDITIONAL_BODY_PARTS={
+ '-z2LUk9OSO0':['Hips'], '7AWLfjXYjTE':['Back','Hips'], 'C9ovv8qUCpY':['Hips','Hamstrings'],
+ 'KpnolwGTmno':['Calves','Hamstrings','Back'], 'Xt5WMcSv9Js':['Calves','Hamstrings','Back'],
+ 'r5JuFoNzOU8':['Back','Core'], 'mIjQOixRnfE':['Core','Hips'], 'eEdrVDK8M3U':['Hips','Glutes'],
+ 'zWWTdrJulmk':['Hamstrings','Back'], 'MTWiYjdbeSU':['Calves'], '6LB__vPvaaE':['Lower body'],
+ 'TIHs5EQ2KYw':['Full body'], 'ryXws4S9lDI':['Full body']
+};
+const additionalIds=new Set([
+ ...IMPORTED_PLAYLISTS.filter(c=>['runna-routines','runna-torzi'].includes(c.id)).flatMap(c=>c.videos.map(v=>v.id)),
+ ...RUNNA_VIDEOS.filter(v=>(v.categories||[]).some(c=>c[0]==='Runna: Mobility & stretches')).map(v=>v.id)
+]);
+const ADDITIONAL_BUILDER_VIDEOS=HUB_VIDEOS.filter(v=>additionalIds.has(v.id)&&!v.topics.includes('pilates')&&!/pilates/i.test(v.title)).map(video=>{
+ const strength=/\b(strength|core workout|hopping)\b/i.test(video.title);
+ const kind=video.kind==='session'||/routine|session|workout/i.test(video.title)?'session':'exercise';
+ const specific=ADDITIONAL_BODY_PARTS[video.id]||video.bodyParts.filter(p=>!['Upper body','Lower body','Full body'].includes(p));
+ const general=video.collections.includes('runna-torzi')&&!specific.length;
+ const parts=specific.length?specific:general?['General mobility']:video.bodyParts.length?video.bodyParts:['General mobility'];
+ return {video,parts,kind,type:strength?'Strength':'Stretching & mobility'};
+});
+let additionalBuilderOpenVideo=null;
+function initializeAdditionalBuilderVideos(){
+ for(const name of ['Full body','Lower body','General mobility'])if(!MUSCLES.includes(name)){MUSCLES.push(name);DATA[name]={};}
+ for(const {video} of ADDITIONAL_BUILDER_VIDEOS){
+  VIDEO_LOOKUP[video.id]=video.title;if(video.details)VIDEO_DETAILS[video.id]=video.details;
+  const ids=AUTO_EXERCISE_VIDEOS[video.title]||[];if(!ids.includes(video.id))ids.push(video.id);AUTO_EXERCISE_VIDEOS[video.title]=ids;
+ }
+}
+function additionalMatches(item){
+ const muscle=state.muscle;
+ const aliases={'Feet & Ankles':'Feet & ankles','Upper Body':'Upper body','Upper Legs (combo)':'Lower body','Upper/Lower Leg Combo':'Lower body','Core-Lower Combo':'Lower body'};
+ const target=aliases[muscle]||muscle;
+ if(target&&!item.parts.includes(target)&&!(target==='Lower body'&&item.parts.some(p=>['Feet & ankles','Shins','Calves','Quads','Hamstrings','Glutes','Hips'].includes(p)))&&!(target==='Upper body'&&item.parts.some(p=>['Back','Chest','Shoulders','Arms'].includes(p))))return false;
+ return hubMatches(item.video,document.getElementById('exerciseSearchInput').value||'');
+}
+function addAdditionalToWorkout(id){
+ const item=ADDITIONAL_BUILDER_VIDEOS.find(v=>v.video.id===id);if(!item||myWorkout.some(w=>w.videoId===id))return;
+ const {video,kind,type,parts}=item;
+ const strengthDemo=type==='Strength'&&kind==='exercise',goal=strengthDemo?(state.goal||'Endurance'):kind==='session'?'Follow-along':'Stretching';
+ const g=GOALS[goal];
+ myWorkout.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),exercise:video.title,videoId:id,muscle:state.muscle||parts[0],category:type,goal,kind:kind==='session'?'session':strengthDemo?'exercise':'stretch',libraryVideo:true,duration:video.duration||'',durationSeconds:video.seconds,
+  sets:g?.sets||'1',reps:g?.reps||(kind==='session'?video.duration||'Follow video':'Follow demonstration'),rest:g?.rest||'As needed',rir:g?`${g.rir}, RPE ${g.rpe}`:'—'});
+ additionalBuilderOpenVideo=id;saveWorkout();renderWorkoutBar();renderAdditionalBuilderVideos();navigationPersist();
+}
+function renderAdditionalBuilderVideos(){
+ const root=document.getElementById('additionalBuilderVideos');root.innerHTML='';
+ if(document.getElementById('strengthLibrary').hidden)return;
+ const heading=el('h3','additional-heading');heading.textContent='Strength & stretching videos';root.appendChild(heading);
+ const hint=el('p','search-hint');hint.textContent='Uses your muscle selection and exercise search. Add a routine as a complete session, or a tutorial as an exercise.';root.appendChild(hint);
+ const matches=ADDITIONAL_BUILDER_VIDEOS.filter(additionalMatches);
+ if(!matches.length){root.appendChild(el('p','empty','No extra videos match this muscle or search.'));return;}
+ const groups=new Map();
+ for(const item of matches){const name=state.muscle||item.parts[0];if(!groups.has(name))groups.set(name,[]);groups.get(name).push(item);}
+ for(const [group,items] of groups){
+  const section=el('section','additional-muscle-group');const title=el('h4');title.textContent=group;section.appendChild(title);
+  for(const item of items){
+   const {video,kind,type,parts}=item,row=el('article','additional-video');const info=el('div','additional-video-info');const name=el('h5');name.textContent=video.title;info.appendChild(name);
+   const meta=el('p','session-meta');meta.textContent=[type,parts.join(', '),kind==='session'?'Full session':'Tutorial',video.duration].filter(Boolean).join(' · ');info.appendChild(meta);row.appendChild(info);
+   const actions=el('div','additional-video-actions');const play=el('button','btn-ghost');play.type='button';play.textContent=additionalBuilderOpenVideo===video.id?'Close video':'Play';play.setAttribute('aria-label',play.textContent+' '+video.title);play.onclick=()=>{additionalBuilderOpenVideo=additionalBuilderOpenVideo===video.id?null:video.id;renderAdditionalBuilderVideos();navigationPersist();};actions.appendChild(play);
+   const existing=myWorkout.find(w=>w.videoId===video.id),add=el('button','btn-ghost');add.type='button';add.textContent=existing?'Remove':'Add to workout';add.onclick=()=>{if(existing){removeFromWorkoutById(existing.id);renderAdditionalBuilderVideos();}else addAdditionalToWorkout(video.id);};actions.appendChild(add);row.appendChild(actions);
+   if(additionalBuilderOpenVideo===video.id)appendGeneratorEmbed(row,video.id);
+   section.appendChild(row);
+  }
+  root.appendChild(section);
+ }
+}
+
 // Hash routes work on the existing static host, including direct links and refreshes.
 let navigationReady=false,navigationBusy=false,navigationView='hub',navigationDepth=0,navigationCache=null;
 const NAVIGATION_VIEWS=new Set(['hub','sessions','builder','strength','warmups','yoga','pilates','mobility']);
 function navigationCapture(){
- return {view:navigationView,topic:hubTopic,collection:sessionCollection,format:sessionFormat,duration:sessionDuration,focus:sessionFocus,query:document.getElementById('sessionSearchInput').value,hubQuery:document.getElementById('hubSearchInput').value,video:sessionOpenVideo,muscle:state.muscle,goal:state.goal,equipment:[...state.equip],builderQuery:document.getElementById('exerciseSearchInput').value,builderVideos:{...openVideoPanels},builderSearchVideos:{...openSearchVideoPanels},generatorVideo:generatorOpenVideo,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:window.scrollY||0};
+ return {view:navigationView,topic:hubTopic,collection:sessionCollection,format:sessionFormat,duration:sessionDuration,focus:sessionFocus,query:document.getElementById('sessionSearchInput').value,hubQuery:document.getElementById('hubSearchInput').value,video:sessionOpenVideo,muscle:state.muscle,goal:state.goal,equipment:[...state.equip],builderQuery:document.getElementById('exerciseSearchInput').value,builderVideos:{...openVideoPanels},additionalVideo:additionalBuilderOpenVideo,builderSearchVideos:{...openSearchVideoPanels},generatorVideo:generatorOpenVideo,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:window.scrollY||0};
 }
 function navigationURL(snapshot){
  const q=new URLSearchParams();let path=snapshot.view==='hub'?'home':snapshot.view;
@@ -2482,6 +2553,7 @@ function navigationRestore(snapshot,depth=0){
  hubTopic=snapshot.topic;sessionCollection=snapshot.collection;sessionFormat=snapshot.format;sessionDuration='';sessionFocus=snapshot.focus;sessionOpenVideo=snapshot.video;
  document.getElementById('sessionSearchInput').value=snapshot.query||'';document.getElementById('hubSearchInput').value=snapshot.hubQuery||'';
  state.muscle=snapshot.muscle;state.goal=snapshot.goal;state.equip=new Set(snapshot.equipment||[]);document.getElementById('exerciseSearchInput').value=snapshot.builderQuery||'';
+ additionalBuilderOpenVideo=snapshot.additionalVideo||null;
  openVideoPanels=snapshot.builderVideos||{};openSearchVideoPanels=snapshot.builderSearchVideos||{};generatorOpenVideo=navigationView==='builder'?snapshot.generatorVideo:null;
  for(const [id,value] of [['filterPanel',snapshot.filterOpen],['generatorPanel',snapshot.generatorOpen]])if(typeof value==='boolean')document.getElementById(id).open=value;
  if(navigationView==='hub')renderHub();else if(navigationView==='builder'){render();renderGeneratorDraft();}else renderSessionLibrary();
@@ -2522,8 +2594,8 @@ function initializeNavigation(){
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('appMenuToggle').getAttribute('aria-expanded')==='true'){closeAppMenu();document.getElementById('appMenuToggle').focus();}});
  const originalHub=renderHub;renderHub=function(){originalHub();if(navigationView==='hub')navigationPersist();};
  const originalSessions=renderSessionLibrary;renderSessionLibrary=function(){originalSessions();if(navigationView!=='hub'&&navigationView!=='builder')navigationPersist();};
- const originalResults=renderResults;renderResults=function(){originalResults();if(navigationView==='builder')navigationPersist();};
- const originalSearch=renderSearchResults;renderSearchResults=function(){originalSearch();if(navigationView==='builder')navigationPersist();};
+ const originalResults=renderResults;renderResults=function(){originalResults();renderAdditionalBuilderVideos();if(navigationView==='builder')navigationPersist();};
+ const originalSearch=renderSearchResults;renderSearchResults=function(){originalSearch();renderAdditionalBuilderVideos();if(navigationView==='builder')navigationPersist();};
  const originalGenerator=renderGeneratorDraft;renderGeneratorDraft=function(){originalGenerator();if(navigationView==='builder')navigationPersist();};
  document.getElementById('navigationBack').onclick=navigationBack;document.getElementById('navigationHome').onclick=navigationHome;document.getElementById('brandHome').onclick=e=>{e.preventDefault();navigationHome();};
  window.addEventListener('popstate',e=>{const saved=e.state?.trainingHub?e.state:null;navigationRestore(saved?.snapshot||navigationParse(window.location?.hash),saved?.depth||0);});
@@ -2533,6 +2605,7 @@ function initializeNavigation(){
  const initial=saved?.snapshot||navigationParse(window.location?.hash);navigationReady=true;navigationRestore(initial,saved?.depth||0);navigationCommit(false);
 }
 
+initializeAdditionalBuilderVideos();
 renderHubBrowse();
 render();
 document.getElementById('libraryCount').textContent=`${HUB_VIDEOS.length} videos · ${HUB_COLLECTIONS.length} collections`;
