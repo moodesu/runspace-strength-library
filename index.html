@@ -1070,41 +1070,79 @@ button{transition:background .15s,border-color .15s;}
 .brand-home{text-decoration:none;font:inherit;cursor:pointer;border:0;background:transparent;color:inherit;padding:0;text-align:left;}.brand-home:focus-visible{outline:2px solid var(--peach);outline-offset:6px;border-radius:8px;}
 .navigation-bar{display:flex;align-items:center;gap:18px;margin:0 0 14px;min-height:44px;}.navigation-actions{display:flex;gap:7px;flex-shrink:0;}.navigation-button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--border);background:white;color:var(--ink);border-radius:8px;padding:10px 15px;min-height:44px;cursor:pointer;}.navigation-button:disabled{opacity:.45;cursor:default;}.navigation-breadcrumbs{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:14px;line-height:1.5;min-width:0;}.navigation-breadcrumbs>*+*::before{content:'/';display:inline-block;color:#829198;margin-right:8px;}.breadcrumb-button{font:inherit;border:0;background:none;padding:6px 0;color:#416c79;cursor:pointer;min-height:40px;text-align:left;}.breadcrumb-button:hover{text-decoration:underline;}.breadcrumb-current{color:var(--ink);font-weight:600;overflow-wrap:anywhere;}
 @media(max-width:640px){.navigation-bar{flex-wrap:wrap;gap:5px 12px;}.navigation-breadcrumbs{flex-basis:100%;font-size:13px;}.navigation-actions{width:100%;}.navigation-button{flex:1;}}
+/* One app menu; filters belong to the page they affect. */
+.wrap{max-width:1600px;margin:0 0 0 236px;padding:30px 36px 64px;}
+.app-sidebar{position:fixed;inset:0 auto 0 0;width:236px;background:#fff;border-right:1px solid var(--border);padding:30px 18px;z-index:20;overflow-y:auto;}
+.app-menu-heading .brand-lockup{gap:10px;}
+.app-menu-heading h1{font-size:21px;line-height:1.3;letter-spacing:-.6px;margin:0;color:var(--ink);}
+.app-menu-heading .brand-mark{width:40px;height:40px;border-radius:10px;font-size:19px;}
+.app-menu-toggle{display:none;}
+.app-sidebar .library-nav{display:flex;flex-direction:column;gap:5px;padding:0;margin:36px 0 24px;border:0;border-radius:0;background:none;width:100%;}
+.app-sidebar .library-view-tab{flex:none;width:100%;min-height:46px;text-align:left;padding:12px 15px;font-size:15px;}
+.app-sidebar .builder-nav{margin-top:18px;border-top:1px solid var(--border);}
+.app-sidebar .library-count{font-size:13px;color:var(--ink-dim);padding:18px 10px;border-top:1px solid var(--border);}
+.navigation-bar{gap:16px;margin-bottom:25px;min-height:36px;}
+.navigation-button{background:transparent;border:0;padding:6px 0;min-height:36px;color:var(--ink-dim);font-size:14px;}
+.navigation-button:disabled{display:none;}
+.navigation-breadcrumbs{font-size:14px;}
+.breadcrumb-button{min-height:36px;}
+.hub-heading h2,.library-view-heading{font-size:28px;letter-spacing:-.7px;}
+#sessionLibrary.library-layout,#strengthLibrary.library-layout{grid-template-columns:minmax(0,1fr);gap:20px;}
+#strengthLibrary .library-sidebar{position:static;}
+#strengthLibrary .muscle-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+#strengthLibrary .goal-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+#strengthLibrary .filter-panel>summary{padding:14px 18px;display:flex;align-items:center;gap:16px;}
+#strengthLibrary .filter-summary{margin:0;}
+.session-toolbar{display:flex;align-items:flex-start;gap:14px;margin:0 0 24px;}
+.collection-field{flex:1;min-width:0;font-size:14px;color:var(--ink-dim);}
+.collection-field .session-select{margin:7px 0 0;color:var(--ink);}
+.session-more-filters{flex:1;margin-top:28px;min-width:0;border-radius:8px;}
+.session-more-filters>summary{padding:10px 14px;min-height:44px;font-size:14px;display:flex;align-items:center;gap:12px;}
+.session-more-filters .filter-summary{font-size:13px;margin:0;}
+.session-filter-fields{padding:8px 14px 14px;}
+.session-filter-fields label{font-size:14px;}
+.session-filter-fields .session-select{margin:7px 0 12px;}
+.search-block .section-label{font-size:14px;text-transform:none;letter-spacing:0;font-weight:500;}
+.collection-grid,.session-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(min-width:1600px){.wrap{margin-right:auto;}}
+@media(max-width:1150px){.wrap{padding:25px;}.collection-grid,.session-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:800px){.wrap{margin:0;padding:96px 20px 48px;}.app-sidebar{inset:0 0 auto 0;width:100%;padding:14px 20px;border-right:0;border-bottom:1px solid var(--border);overflow:visible;}.app-menu-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;}.app-menu-toggle{display:block;min-height:44px;font:inherit;font-size:14px;background:white;border:1px solid var(--border);border-radius:8px;padding:8px 16px;color:var(--ink);}.app-menu-body{display:none;}.app-menu-body.is-open{display:block;max-height:calc(100dvh - 74px);overflow-y:auto;}.app-sidebar .library-nav{margin:15px 0 10px;}.app-sidebar .library-count{margin:0;padding:12px 10px;}.navigation-actions{width:auto;}.navigation-button{flex:none;}.navigation-breadcrumbs{flex-basis:auto;}.navigation-bar{flex-wrap:nowrap;align-items:flex-start;}.filter-panel>summary::after{display:none;}}
+@media(max-width:640px){.wrap{padding:94px 16px 40px;}.app-sidebar{padding:12px 16px;}.collection-grid,.session-grid{grid-template-columns:1fr;}.session-toolbar{flex-direction:column;gap:10px;}.collection-field,.session-more-filters{width:100%;}.session-more-filters{margin:0;}.hub-heading h2,.library-view-heading{font-size:24px;}#strengthLibrary .muscle-grid,#strengthLibrary .goal-grid{grid-template-columns:repeat(2,minmax(0,1fr));}#strengthLibrary .filter-panel>summary{flex-wrap:wrap;gap:4px;}#strengthLibrary .filter-summary{flex-basis:100%;}.navigation-breadcrumbs{min-width:0;}.app-menu-heading h1{font-size:20px;}}
+@media print{.app-sidebar{display:none!important;}}
+
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
 <body>
 <div class="wrap">
 
-  <header class="hero">
-    <a href="#/home" id="brandHome" class="brand-lockup brand-home" aria-label="Training Hub home"><span class="brand-mark" aria-hidden="true">T<span>L</span></span><div><h1>Training <span class="light">Hub</span></h1></div></a>
-    <p class="library-count" id="libraryCount"></p>
-  </header>
-
-  <div class="navigation-bar"><div class="navigation-actions"><button type="button" id="navigationBack" class="navigation-button">Back</button><button type="button" id="navigationHome" class="navigation-button">Home</button></div><nav id="navigationBreadcrumbs" class="navigation-breadcrumbs" aria-label="Breadcrumb"></nav></div>
-  <nav class="library-nav" aria-label="Training areas">
-    <button type="button" id="hubTab" class="library-view-tab active" aria-pressed="true">Hub</button>
+  <aside class="app-sidebar" aria-label="Training Hub navigation">
+    <div class="app-menu-heading">    <a href="#/home" id="brandHome" class="brand-lockup brand-home" aria-label="Training Hub home"><span class="brand-mark" aria-hidden="true">T<span>L</span></span><div><h1>Training <span class="light">Hub</span></h1></div></a><button type="button" id="appMenuToggle" class="app-menu-toggle" aria-expanded="false" aria-controls="appMainMenu">Menu</button></div>
+    <div id="appMainMenu" class="app-menu-body">  <nav class="library-nav" aria-label="Training areas">
+    <button type="button" id="hubTab" class="library-view-tab active" aria-pressed="true">Home</button>
     <button type="button" id="strengthTab" class="library-view-tab" aria-pressed="false">Strength</button>
     <button type="button" id="warmupTab" class="library-view-tab" aria-pressed="false">Warm-ups</button>
     <button type="button" id="yogaTab" class="library-view-tab" aria-pressed="false">Yoga</button>
     <button type="button" id="pilatesTab" class="library-view-tab" aria-pressed="false">Pilates</button>
-    <button type="button" id="mobilityTab" class="library-view-tab" aria-pressed="false">Stretching &amp; mobility</button>
+    <button type="button" id="mobilityTab" class="library-view-tab" aria-pressed="false">Stretching</button>
     <button type="button" id="builderTab" class="library-view-tab builder-nav" aria-pressed="false">Workout builder</button>
-  </nav>
+  </nav><p class="library-count" id="libraryCount"></p></div>
+  </aside>
+  <div class="navigation-bar"><div class="navigation-actions"><button type="button" id="navigationBack" class="navigation-button">Back</button></div><nav id="navigationBreadcrumbs" class="navigation-breadcrumbs" aria-label="Breadcrumb"></nav></div>
   <section id="hubLibrary" aria-labelledby="hubTitle">
-    <div class="hub-heading"><h2 id="hubTitle">What are you training today?</h2><button type="button" class="btn-ghost" id="allVideosButton">All videos</button></div>
+    <div class="hub-heading"><h2 id="hubTitle">Your training library</h2><button type="button" class="btn-ghost" id="allVideosButton">All videos</button></div>
     <div class="search-block hub-search">
       <label class="section-label" for="hubSearchInput">Search the whole library</label>
       <div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="hubSearchInput" class="exercise-search-input" aria-controls="hubSearchResults" placeholder="Yoga, calf stretch, Coach Christie…"><button type="button" id="hubSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div>
     </div>
     <p id="hubSearchCount" class="search-hint" aria-live="polite"></p><div id="hubSearchResults" class="session-grid" hidden></div>
-    <div id="hubBrowse"><div id="hubTopicCards" class="hub-topic-grid"></div><div class="hub-heading"><h2>Guided collections</h2></div><div id="hubCollections" class="collection-grid"></div></div>
+    <div id="hubBrowse"><div id="hubTopicCards" hidden></div><div class="hub-heading"><h2>Guided collections</h2></div><div id="hubCollections" class="collection-grid"></div></div>
   </section>
   <div class="workout-bar" id="workoutBar"></div>
 
   <div class="library-layout" id="strengthLibrary" hidden>
     <aside class="library-sidebar" aria-label="Exercise filters">
-      <details class="filter-panel" id="filterPanel" open>
+      <details class="filter-panel" id="filterPanel">
         <summary>Exercise filters <span class="filter-summary" id="filterSummary">All muscles · All equipment</span></summary>
         <div class="filter-content">
           <div class="filter-heading"><span>Find your focus</span><button type="button" class="btn-ghost" id="resetFilters">Clear</button></div>
@@ -1152,14 +1190,14 @@ button{transition:background .15s,border-color .15s;}
   </div>
 
   <section id="sessionLibrary" class="library-layout" hidden aria-labelledby="sessionLibraryTitle">
-    <aside class="library-sidebar" aria-label="Video filters"><details class="filter-panel" id="sessionFilterPanel" open><summary>Video filters <span class="filter-summary" id="sessionFilterSummary">All collections</span></summary><div class="filter-content">
-      <p class="section-label">Collection</p><div id="sessionCollections" class="session-collections"></div>
-      <div id="sessionFocusFilter" hidden><label class="section-label" for="sessionFocus">Focus</label><select id="sessionFocus" class="session-select"><option value="">All focuses</option></select></div>
-      <label class="section-label" for="sessionFormat">Format</label><select id="sessionFormat" class="session-select"><option value="">All formats</option><option value="session">Full sessions</option><option value="exercise">Exercises &amp; tutorials</option></select>
-      <label class="section-label" for="sessionDuration">Video length</label><select id="sessionDuration" class="session-select"><option value="">Any length</option><option value="short">Up to 10 minutes</option><option value="medium">Over 10 to 30 minutes</option><option value="long">Over 30 minutes</option></select>
-    </div></details></aside>
     <div class="library-main"><h2 class="library-view-heading" id="sessionLibraryTitle">All videos</h2>
-      <div class="search-block"><label class="section-label" for="sessionSearchInput">Find a session or exercise</label><div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="sessionSearchInput" class="exercise-search-input" aria-controls="sessionResults" placeholder="Coach, session number, exercise…"><button type="button" id="sessionSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div></div>
+      <div class="search-block"><label class="section-label" for="sessionSearchInput">Search videos</label><div class="search-input-wrap"><input type="search" id="sessionSearchInput" class="exercise-search-input" aria-controls="sessionResults" placeholder="Coach, session number, exercise…"><button type="button" id="sessionSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div></div>
+      <div class="session-toolbar"><label class="collection-field" for="sessionCollections">Collection<select id="sessionCollections" class="session-select"><option value="">All collections</option></select></label>
+      <details class="filter-panel session-more-filters" id="sessionFilterPanel"><summary>Filters <span class="filter-summary" id="sessionFilterSummary">All formats</span></summary><div class="filter-content session-filter-fields">
+      <div id="sessionFocusFilter" hidden><label for="sessionFocus">Focus</label><select id="sessionFocus" class="session-select"><option value="">All focuses</option></select></div>
+      <div><label for="sessionFormat">Format</label><select id="sessionFormat" class="session-select"><option value="">All formats</option><option value="session">Full sessions</option><option value="exercise">Exercises &amp; tutorials</option></select></div>
+      <div><label for="sessionDuration">Video length</label><select id="sessionDuration" class="session-select"><option value="">Any length</option><option value="short">Up to 10 minutes</option><option value="medium">Over 10 to 30 minutes</option><option value="long">Over 30 minutes</option></select></div>
+      </div></details></div>
       <p id="sessionCollectionNote" class="search-hint" hidden></p><p id="sessionResultCount" class="search-hint" aria-live="polite"></p><div id="sessionResults" class="session-grid"></div>
     </div>
   </section>
@@ -2080,16 +2118,9 @@ function renderHub(){
   }else document.getElementById('hubSearchCount').textContent='';
 }
 function renderHubBrowse(){
-  const topics=document.getElementById('hubTopicCards');topics.innerHTML='';
-  for(const [key,topic] of Object.entries(HUB_TOPICS)){
-    const button=el('button','topic-card topic-'+key);button.type='button';
-    const count=el('span','topic-card-count');count.textContent=`${HUB_VIDEOS.filter(v=>v.topics.includes(key)).length} videos`;button.appendChild(count);
-    const title=el('span','topic-card-title');title.textContent=topic.label;button.appendChild(title);
-    const intro=el('span','topic-card-intro');intro.textContent=topic.intro;button.appendChild(intro);
-    button.onclick=()=>showLibrary(key);topics.appendChild(button);
-  }
+  document.getElementById('hubTopicCards').innerHTML='';
   const collections=document.getElementById('hubCollections');collections.innerHTML='';
-  for(const collection of IMPORTED_PLAYLISTS){
+  for(const collection of HUB_COLLECTIONS.filter(c=>c.id.startsWith('runna-'))){
     const card=el('article','collection-card');
     const img=document.createElement('img');img.src=`https://i.ytimg.com/vi/${collection.videos[0].id}/hqdefault.jpg`;img.alt='';img.loading='lazy';img.width=480;img.height=360;card.appendChild(img);
     const body=el('div','collection-card-body');
@@ -2119,9 +2150,9 @@ function renderSessionLibrary(){
   const relevant=HUB_COLLECTIONS.filter(c=>HUB_VIDEOS.some(v=>v.collections.includes(c.id)&&(hubTopic==='all'||v.topics.includes(hubTopic)))).sort((a,b)=>Number(b.id.startsWith('runna-'))-Number(a.id.startsWith('runna-')));
   for(const c of [{id:'',label:'All collections'},...relevant]){
     const count=HUB_VIDEOS.filter(v=>(!c.id||v.collections.includes(c.id))&&(hubTopic==='all'||v.topics.includes(hubTopic))).length;
-    const button=el('button','equip-chip'+(sessionCollection===c.id?' active':''));button.type='button';button.textContent=`${c.label} (${count})`;button.setAttribute('aria-pressed',sessionCollection===c.id);
-    button.onclick=()=>navigationChange(()=>{sessionCollection=c.id;sessionFocus='';sessionOpenVideo=null;renderSessionLibrary();},true);sources.appendChild(button);
+    const option=document.createElement('option');option.value=c.id;option.textContent=`${c.label} (${count})`;sources.appendChild(option);
   }
+  sources.value=sessionCollection;
   const focusSelect=document.getElementById('sessionFocus');focusSelect.innerHTML='';
   const focuses=[...new Set(HUB_VIDEOS.filter(v=>(hubTopic==='all'||v.topics.includes(hubTopic))&&(!sessionCollection||v.collections.includes(sessionCollection))).flatMap(v=>v.focuses))];
   if(sessionFocus&&!focuses.includes(sessionFocus))sessionFocus='';
@@ -2151,6 +2182,7 @@ document.getElementById('hubSearchInput').addEventListener('input',()=>{sessionO
 document.getElementById('hubSearchClear').onclick=()=>{document.getElementById('hubSearchInput').value='';sessionOpenVideo=null;renderHub();document.getElementById('hubSearchInput').focus();};
 document.getElementById('sessionSearchInput').addEventListener('input',()=>{sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionSearchClear').onclick=()=>{document.getElementById('sessionSearchInput').value='';sessionOpenVideo=null;renderSessionLibrary();document.getElementById('sessionSearchInput').focus();};
+document.getElementById('sessionCollections').addEventListener('change',e=>navigationChange(()=>{sessionCollection=e.target.value;sessionFocus='';sessionOpenVideo=null;renderSessionLibrary();},true));
 document.getElementById('sessionFocus').addEventListener('change',e=>{sessionFocus=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionFormat').addEventListener('change',e=>{sessionFormat=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionDuration').addEventListener('change',e=>{sessionDuration=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
@@ -2340,7 +2372,7 @@ function navigationCommit(push){
 }
 function showLibrary(view){
  if(!NAVIGATION_VIEWS.has(view))view='hub';navigationSavePrevious();navigationBusy=true;
- navigationView=view;renderLibraryView(view);navigationBusy=false;
+ navigationView=view;renderLibraryView(view);closeAppMenu();navigationBusy=false;
  if(navigationReady){window.scrollTo?.({top:0,behavior:'instant'});navigationCommit(true);navigationFocusHeading();}
 }
 function navigationChange(action,push=false){
@@ -2355,7 +2387,7 @@ function navigationRestore(snapshot,depth=0){
  openVideoPanels=snapshot.builderVideos||{};openSearchVideoPanels=snapshot.builderSearchVideos||{};generatorOpenVideo=navigationView==='builder'?snapshot.generatorVideo:null;
  for(const [id,value] of [['filterPanel',snapshot.filterOpen],['sessionFilterPanel',snapshot.sessionFilterOpen],['generatorPanel',snapshot.generatorOpen]])if(typeof value==='boolean')document.getElementById(id).open=value;
  if(navigationView==='hub')renderHub();else if(navigationView==='builder'){render();renderGeneratorDraft();}else renderSessionLibrary();
- navigationBusy=false;navigationCache=navigationCapture();navigationRender();
+ closeAppMenu();navigationBusy=false;navigationCache=navigationCapture();navigationRender();
  window.requestAnimationFrame?.(()=>window.scrollTo?.({top:snapshot.scroll||0,behavior:'instant'}));navigationFocusHeading();
 }
 function navigationFocusHeading(){
@@ -2365,6 +2397,8 @@ function navigationHome(){navigationChange(()=>{document.getElementById('hubSear
 function navigationBack(){if(navigationDepth>0)window.history?.back();else navigationHome();}
 function navigationRender(){
  const root=document.getElementById('navigationBreadcrumbs');root.innerHTML='';
+ const menuView=navigationView==='sessions'?(HUB_COLLECTIONS.find(c=>c.id===sessionCollection)?.topic||hubTopic):navigationView;
+ for(const [id,view] of [['hubTab','hub'],['strengthTab','strength'],['warmupTab','warmups'],['yogaTab','yoga'],['pilatesTab','pilates'],['mobilityTab','mobility'],['builderTab','builder']]){const button=document.getElementById(id),active=menuView===view||view==='hub'&&menuView==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');}
  const button=(text,action)=>{const b=el('button','breadcrumb-button');b.type='button';b.textContent=text;b.onclick=action;return b;};
  const current=text=>{const span=el('span','breadcrumb-current');span.textContent=text;span.setAttribute('aria-current','page');root.appendChild(span);};
  if(navigationView==='hub'){current('Home');}
@@ -2383,13 +2417,15 @@ function navigationRender(){
  document.getElementById('navigationBack').disabled=navigationDepth===0&&navigationView==='hub';
  const label=navigationView==='builder'?'Workout builder':navigationView==='hub'?'Home':HUB_COLLECTIONS.find(c=>c.id===sessionCollection)?.label||HUB_TOPICS[navigationView]?.label||'All videos';document.title=label+' — Training Hub';
 }
+function closeAppMenu(){document.getElementById('appMainMenu').classList.remove('is-open');document.getElementById('appMenuToggle').setAttribute('aria-expanded','false');}
 function initializeNavigation(){
+ document.getElementById('appMenuToggle').onclick=()=>{const menu=document.getElementById('appMainMenu'),button=document.getElementById('appMenuToggle');const open=button.getAttribute('aria-expanded')!=='true';menu.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open));};
  const originalHub=renderHub;renderHub=function(){originalHub();if(navigationView==='hub')navigationPersist();};
  const originalSessions=renderSessionLibrary;renderSessionLibrary=function(){originalSessions();if(navigationView!=='hub'&&navigationView!=='builder')navigationPersist();};
  const originalResults=renderResults;renderResults=function(){originalResults();if(navigationView==='builder')navigationPersist();};
  const originalSearch=renderSearchResults;renderSearchResults=function(){originalSearch();if(navigationView==='builder')navigationPersist();};
  const originalGenerator=renderGeneratorDraft;renderGeneratorDraft=function(){originalGenerator();if(navigationView==='builder')navigationPersist();};
- document.getElementById('navigationBack').onclick=navigationBack;document.getElementById('navigationHome').onclick=navigationHome;document.getElementById('brandHome').onclick=e=>{e.preventDefault();navigationHome();};
+ document.getElementById('navigationBack').onclick=navigationBack;document.getElementById('brandHome').onclick=e=>{e.preventDefault();navigationHome();};
  window.addEventListener('popstate',e=>{const saved=e.state?.trainingHub?e.state:null;navigationRestore(saved?.snapshot||navigationParse(window.location?.hash),saved?.depth||0);});
  window.addEventListener('hashchange',()=>{if(navigationURL(navigationCache||navigationCapture())!==window.location?.hash){navigationRestore(navigationParse(window.location?.hash),0);navigationCommit(false);}});
  window.addEventListener('scroll',()=>{if(navigationCache)navigationCache.scroll=window.scrollY||0;},{passive:true});
