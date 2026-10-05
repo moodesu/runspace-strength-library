@@ -1211,6 +1211,16 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 .gen-exercise>.video-panel{margin-top:18px;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);gap:18px;}.gen-exercise>.video-panel>.video-details{grid-column:1;}.gen-exercise>.video-panel .video-embed{max-width:760px;width:100%;}
 
 #additionalBuilderVideos{margin-top:34px;border-top:1px solid var(--border);padding-top:24px;}.additional-heading{font:400 28px/1.3 Georgia,serif;margin:0 0 10px;}.additional-muscle-group{margin:24px 0;}.additional-muscle-group>h4{font:500 15px/1.4 'Inter',Arial,sans-serif;margin:0;padding:0 0 12px;border-bottom:1px solid var(--border);}.additional-video{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:center;border-bottom:1px solid var(--border);padding:18px 0;}.additional-video-info h5{font:400 21px/1.35 Georgia,serif;margin:0;}.additional-video-actions{display:flex;gap:15px;align-items:center;}.additional-video-actions button{font-size:14px;white-space:nowrap;}.additional-video>.video-panel{grid-column:1/-1;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);}.additional-video>.video-panel .video-embed{max-width:760px;width:100%;}.additional-video>.video-panel .video-details{grid-column:1;}@media(max-width:640px){.additional-video{grid-template-columns:1fr;}.additional-video-actions{justify-content:flex-start;}.additional-video-actions button{padding-left:0;}.additional-heading{font-size:25px;}}
+
+/* Keep workout controls readable on the light studio surfaces. */
+.workout-bar{color:var(--ink);}
+.workout-count,.workout-count span{color:var(--ink);}
+.workout-chip{color:var(--ink);background:var(--sage);border-color:var(--border);}
+.workout-bar .btn-ghost{color:var(--ink);border-color:var(--border);background:transparent;}
+.workout-bar .btn-ghost:hover{color:var(--ink);background:var(--sage);}
+.workout-bar .btn-primary{color:var(--cream);background:var(--ink);border-color:var(--ink);}
+.btn-primary:hover,.workout-bar .btn-primary:hover{color:var(--cream);background:var(--peach-deep);border-color:var(--peach-deep);}
+.btn-primary:disabled,.workout-bar .btn-primary:disabled,.gen-actions button:disabled{color:var(--ink-dim);background:var(--sage);border-color:var(--border);opacity:1;cursor:not-allowed;}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
