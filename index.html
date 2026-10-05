@@ -1207,6 +1207,8 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 @media(max-width:380px){.session-controls{grid-template-columns:1fr;gap:15px;}.app-menu-heading h1{font-size:15px;}.navigation-breadcrumbs{font-size:12px;}}
 @media print{.app-sidebar{display:none!important;}}
 
+
+.gen-exercise>.video-panel{margin-top:18px;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);gap:18px;}.gen-exercise>.video-panel>.video-details{grid-column:1;}.gen-exercise>.video-panel .video-embed{max-width:760px;width:100%;}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
@@ -1227,7 +1229,7 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
   </header>
   <div class="navigation-bar"><div class="navigation-actions"><button type="button" id="navigationBack" class="navigation-button">Back</button><button type="button" id="navigationHome" class="navigation-button">Home</button></div><nav id="navigationBreadcrumbs" class="navigation-breadcrumbs" aria-label="Breadcrumb"></nav></div>
   <section id="hubLibrary" aria-labelledby="hubTitle">
-    <div class="hub-heading"><h2 id="hubTitle">Your training library</h2><button type="button" class="btn-ghost" id="allVideosButton">All videos</button></div>
+    <div class="hub-heading"><h2 id="hubTitle">Library</h2><button type="button" class="btn-ghost" id="allVideosButton">All videos</button></div>
     <div class="search-block hub-search">
       <label class="section-label" for="hubSearchInput">Search the whole library</label>
       <div class="search-input-wrap"><svg class="search-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="hubSearchInput" class="exercise-search-input" aria-controls="hubSearchResults" placeholder="Yoga, calf stretch, Coach Christie…"><button type="button" id="hubSearchClear" class="search-clear-btn" aria-label="Clear search">Clear</button></div>
@@ -1248,7 +1250,7 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 <label>Focus<select id="genFocus"><option value="running">Running strength</option><option value="full">Full body</option><option value="upper">Upper body</option><option value="lower">Lower body</option><option value="core">Core</option></select></label>
 <label>Time available<select id="genTime"><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="35">35 minutes</option><option value="45">45 minutes</option></select></label>
 <label>Training goal<select id="genGoal"><option value="Endurance">Marathon / Endurance · 15+ reps</option><option value="Hypertrophy">Hypertrophy · 8–15 reps</option><option value="Strength">Strength · 5–8 reps</option><option value="Power">Power · fewer than 5 reps</option></select></label>
-</div><fieldset class="gen-fieldset"><legend>Equipment available</legend><p class="search-hint">Bodyweight is always available. Select only equipment you have.</p><div class="gen-checks"><label><input type="checkbox" id="genEquip-band">Resistance band</label><label><input type="checkbox" id="genEquip-dumbbell">Dumbbells</label><label><input type="checkbox" id="genEquip-kettlebell">Kettlebell</label><label><input type="checkbox" id="genEquip-barbell">Barbell</label><label><input type="checkbox" id="genEquip-machine">Gym machines</label><label><input type="checkbox" id="genEquip-bench">Weight bench</label><label><input type="checkbox" id="genEquip-box">Sturdy box</label><label><input type="checkbox" id="genEquip-rack">Squat rack</label></div></fieldset><details class="gen-exclusions"><summary>Muscle groups and exercises to leave out</summary><div class="gen-checks"><label><input type="checkbox" id="genAvoid-Quads">Quads</label><label><input type="checkbox" id="genAvoid-Hamstrings">Hamstrings</label><label><input type="checkbox" id="genAvoid-Glutes">Glutes</label><label><input type="checkbox" id="genAvoid-Calves">Calves</label><label><input type="checkbox" id="genAvoid-Core">Core</label><label><input type="checkbox" id="genAvoid-Back">Back</label><label><input type="checkbox" id="genAvoid-Upper-body">Upper body</label></div><label class="gen-omit">Exclude exercises containing<input type="text" id="genOmit" placeholder="For example: lunge" maxlength="60"></label></details>
+</div><fieldset class="gen-fieldset"><legend>Equipment available</legend><p class="search-hint">Bodyweight is always available. Select only equipment you have.</p><div class="gen-checks"><label><input type="checkbox" id="genEquip-band">Resistance band</label><label><input type="checkbox" id="genEquip-dumbbell">Dumbbells</label><label><input type="checkbox" id="genEquip-kettlebell">Kettlebell</label><label><input type="checkbox" id="genEquip-barbell">Barbell</label><label><input type="checkbox" id="genEquip-machine">Gym machines</label><label><input type="checkbox" id="genEquip-bench">Weight bench</label><label><input type="checkbox" id="genEquip-box">Sturdy box</label><label><input type="checkbox" id="genEquip-rack">Squat rack</label></div></fieldset>
 <label class="gen-prep"><input type="checkbox" id="genPrep" checked>Include warm-up and stretching suggestions in the time estimate</label>
 <div class="gen-actions"><button type="button" id="genGenerate" class="btn-primary">Generate workout</button></div>
 <div id="genDraft" class="gen-draft"></div><p id="genStatus" class="search-hint" role="status" aria-live="polite"></p>
@@ -2122,6 +2124,7 @@ function renderLibraryView(view){
   // Unload inactive players when changing areas.
   sessionOpenVideo=null;document.getElementById('hubSearchResults').innerHTML='';document.getElementById('sessionResults').innerHTML='';
   if(!builder){generatorOpenVideo=null;renderGeneratorDraft();openVideoPanels={};openSearchVideoPanels={};renderResults();renderSearchResults();}
+  if(builder)renderGeneratorDraft();
   if(hub)renderHub();
   if(!(builder||hub))renderSessionLibrary();
 }
@@ -2322,7 +2325,7 @@ const GENERATOR_CHOICES=[
 ].map(([exercise,videoId,pattern,muscle,category,equipment,targets,level,perSide,timed])=>({exercise,videoId,pattern,muscle,category,equipment,targets,level,perSide,timed}));
 let generatorDraft=null,generatorVersion=0,generatorOpenVideo=null;
 function generatorOptions(){
- return {focus:document.getElementById('genFocus').value,minutes:Number(document.getElementById('genTime').value),goal:document.getElementById('genGoal').value,equipment:Object.keys(GENERATOR_EQUIPMENT).filter(k=>document.getElementById('genEquip-'+k).checked),avoid:['Quads','Hamstrings','Glutes','Calves','Core','Back','Upper body'].filter(k=>document.getElementById('genAvoid-'+k.replace(/ /g,'-')).checked),omit:normalizeExercise(document.getElementById('genOmit').value||''),prep:document.getElementById('genPrep').checked};
+ return {focus:document.getElementById('genFocus').value,minutes:Number(document.getElementById('genTime').value),goal:document.getElementById('genGoal').value,equipment:Object.keys(GENERATOR_EQUIPMENT).filter(k=>document.getElementById('genEquip-'+k).checked),avoid:[],omit:'',prep:document.getElementById('genPrep').checked};
 }
 function generatorEligible(options,pattern){
  return GENERATOR_CHOICES.filter(c=>c.pattern===pattern&&c.equipment.every(k=>options.equipment.includes(k))&&!c.targets.some(k=>options.avoid.includes(k))&&(!options.omit||!normalizeExercise(c.exercise+' '+VIDEO_LOOKUP[c.videoId]).includes(options.omit))&&getVideosFor(c.exercise).includes(c.videoId));
@@ -2387,6 +2390,12 @@ function useGeneratorDraft(){
  saveWorkout();draft.used=true;renderWorkoutBar();renderResults();renderSearchResults();renderGeneratorDraft();renderGeneratorSupport();
  document.getElementById('genStatus').textContent=added?`${added} exercise${added===1?'':'s'} saved to your workout. Open Workout sheet to edit or print it.`:'These exercises are already in your workout.';
 }
+function appendGeneratorEmbed(parent,id){
+ const panel=el('div','video-panel'),embed=el('div','video-embed'),frame=document.createElement('iframe');
+ frame.src=`https://www.youtube.com/embed/${id}`;frame.title=VIDEO_LOOKUP[id]||HUB_VIDEO_MAP.get(id)?.title||'Exercise video';frame.loading='lazy';
+ frame.setAttribute('allow','accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');frame.setAttribute('allowfullscreen','');frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+ embed.appendChild(frame);panel.appendChild(embed);appendVideoDetails(panel,id,HUB_VIDEO_MAP.get(id)?.details||VIDEO_DETAILS[id]);parent.appendChild(panel);
+}
 function renderGeneratorDraft(){
  const root=document.getElementById('genDraft');root.innerHTML='';const draft=generatorDraft;if(!draft)return;
  const heading=el('h3');heading.textContent=GENERATOR_FOCUS[draft.options.focus]+' draft';root.appendChild(heading);
@@ -2405,19 +2414,19 @@ function renderGeneratorDraft(){
    input.value=item[field];input.onchange=()=>{item[field]=input.value;draft.used=false;document.getElementById('genStatus').textContent='';renderGeneratorDraft();};wrap.appendChild(input);fields.appendChild(wrap);
   }
   row.appendChild(fields);const actions=el('div','gen-actions');
-  const video=el('button','btn-ghost',generatorOpenVideo===c.videoId?'Close demo':'Play demo');video.type='button';video.onclick=()=>{generatorOpenVideo=generatorOpenVideo===c.videoId?null:c.videoId;renderGeneratorDraft();};actions.appendChild(video);
   const swap=el('button','btn-ghost','Swap exercise');swap.type='button';swap.disabled=!generatorAlternatives(index).length;swap.onclick=()=>swapGeneratedExercise(index);actions.appendChild(swap);row.appendChild(actions);
-  if(generatorOpenVideo===c.videoId){const panel=el('div','video-panel');const embed=el('div','video-embed');const frame=document.createElement('iframe');frame.src=`https://www.youtube.com/embed/${c.videoId}`;frame.title=VIDEO_LOOKUP[c.videoId];frame.setAttribute('allowfullscreen','');embed.appendChild(frame);panel.appendChild(embed);appendVideoDetails(panel,c.videoId);row.appendChild(panel);}
+  if(!document.getElementById('strengthLibrary').hidden)appendGeneratorEmbed(row,c.videoId);
   root.appendChild(row);
  }
- for(const v of draft.prep){const button=el('button','btn-ghost');button.type='button';button.textContent=v.label+' · '+v.seconds/60+' min';button.onclick=()=>openGeneratorVideo(v.id);root.appendChild(button);}
+ for(const v of draft.prep){const section=el('article','gen-exercise gen-preparation');const title=el('h4');title.textContent=v.label+' · '+v.seconds/60+' min';section.appendChild(title);if(!document.getElementById('strengthLibrary').hidden)appendGeneratorEmbed(section,v.id);root.appendChild(section);}
+
  if(draft.items.length){const action=el('div','gen-actions');const label=el('label');label.textContent='Save to workout';const select=document.createElement('select');select.id='genSaveMode';for(const [value,text] of [['add','Add to existing workout'],['replace','Replace existing workout']]){const option=document.createElement('option');option.value=value;option.textContent=text;select.appendChild(option);}label.appendChild(select);action.appendChild(label);
  const use=el('button','btn-primary',draft.used?'Saved to workout':'Use this workout');use.type='button';use.disabled=draft.used;use.onclick=useGeneratorDraft;action.appendChild(use);root.appendChild(action);}
  const guidance=el('p','search-hint');guidance.textContent='Time is an estimate for controlled reps, rest and transitions. Choose a manageable load and use the selected goal’s reps in reserve. You can adjust prescriptions in the workout sheet.';root.appendChild(guidance);
 }
 document.getElementById('genGenerate').onclick=generateWorkoutDraft;
 
-for(const id of ['genFocus','genTime','genGoal','genPrep','genOmit',...Object.keys(GENERATOR_EQUIPMENT).map(k=>'genEquip-'+k),...['Quads','Hamstrings','Glutes','Calves','Core','Back','Upper body'].map(k=>'genAvoid-'+k.replace(/ /g,'-'))])document.getElementById(id).addEventListener('change',()=>{if(generatorDraft)document.getElementById('genStatus').textContent='Settings changed. Generate again to apply them to a new draft.';});
+for(const id of ['genFocus','genTime','genGoal','genPrep',...Object.keys(GENERATOR_EQUIPMENT).map(k=>'genEquip-'+k)])document.getElementById(id).addEventListener('change',()=>{if(generatorDraft)document.getElementById('genStatus').textContent='Settings changed. Generate again to apply them to a new draft.';});
 
 // Hash routes work on the existing static host, including direct links and refreshes.
 let navigationReady=false,navigationBusy=false,navigationView='hub',navigationDepth=0,navigationCache=null;
