@@ -1058,6 +1058,15 @@ button{transition:background .15s,border-color .15s;}
 @media(max-width:640px){.library-view-tab.builder-nav{grid-column:1/-1;}}
 .search-clear-btn{width:auto;min-width:58px;height:40px;padding:0 10px;border-radius:8px;font-size:14px;font-weight:600;}
 .exercise-search-input{padding-right:82px;}
+
+.generator-panel{border:1px solid var(--border);background:white;border-radius:12px;margin:0 0 24px;}
+.generator-panel>summary{font-size:18px;font-weight:700;cursor:pointer;padding:18px 20px;}.generator-content{padding:0 20px 20px;}
+.generator-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0;}.generator-controls label,.gen-prescription label,.gen-actions label,.gen-omit{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:600;}
+.generator-panel select,.generator-panel input[type=text]{width:100%;min-height:44px;font:inherit;font-size:14px;background:white;color:var(--ink);border:1px solid #b6c4c2;border-radius:8px;padding:9px 10px;}
+.gen-fieldset{padding:0;border:0;margin:18px 0;}.gen-fieldset legend{font-size:14px;font-weight:600;}.gen-checks{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0;}.gen-checks label{font-size:14px;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#f3f6f5;border:1px solid var(--border);border-radius:8px;min-height:44px;}.gen-checks input,.gen-prep input{accent-color:var(--ink);width:18px;height:18px;margin:0;flex-shrink:0;}
+.gen-exclusions{margin:16px 0;}.gen-exclusions>summary{font-size:14px;font-weight:600;cursor:pointer;min-height:40px;}.gen-omit{max-width:420px;}.gen-prep{font-size:14px;display:flex;align-items:center;gap:9px;line-height:1.5;margin:20px 0;}.gen-actions{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin:14px 0;}.gen-actions select{width:auto;}.gen-actions button{font-size:14px;min-height:44px;}.gen-actions button:disabled{opacity:.45;cursor:default;}.gen-draft h3{font-size:20px;margin-top:25px;}.gen-exercise{border:1px solid var(--border);padding:16px;border-radius:10px;margin:12px 0;}.gen-exercise h4{font-size:17px;margin:0 0 8px;line-height:1.5;}.gen-prescription{display:grid;grid-template-columns:80px minmax(120px,1fr) 110px;gap:10px;max-width:470px;}.gen-message{font-size:14px;line-height:1.6;padding:10px 12px;border-left:3px solid var(--peach-deep);background:#fdf0e7;}.gen-exercise .video-panel{margin-top:12px;}.gen-exercise .video-embed iframe{min-height:0;}
+@media(max-width:640px){.generator-content{padding:0 14px 14px;}.generator-panel>summary{padding:16px 14px;}.generator-controls{grid-template-columns:1fr;}.gen-prescription{grid-template-columns:60px minmax(90px,1fr) 85px;gap:7px;}.gen-exercise{padding:12px;}.gen-checks{gap:6px;}.gen-actions{align-items:stretch;}.gen-actions label{width:100%;}}
+
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
@@ -1107,6 +1116,17 @@ button{transition:background .15s,border-color .15s;}
 
     <main class="library-main">
       <h2 class="library-view-heading">Runspace workout builder</h2>
+<details class="generator-panel" id="generatorPanel" open><summary>Generate a workout</summary><div class="generator-content">
+<p class="search-hint">Choose your settings, generate a draft, then swap or edit the exercises before saving.</p>
+<div class="generator-controls">
+<label>Focus<select id="genFocus"><option value="running">Running strength</option><option value="full">Full body</option><option value="upper">Upper body</option><option value="lower">Lower body</option><option value="core">Core</option></select></label>
+<label>Time available<select id="genTime"><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="35">35 minutes</option><option value="45">45 minutes</option></select></label>
+<label>Experience<select id="genLevel"><option value="0">Beginner</option><option value="1">Regular strength training</option><option value="2">Experienced</option></select></label>
+</div><fieldset class="gen-fieldset"><legend>Equipment available</legend><p class="search-hint">Bodyweight is always available. Select only equipment you have.</p><div class="gen-checks"><label><input type="checkbox" id="genEquip-band">Resistance band</label><label><input type="checkbox" id="genEquip-dumbbell">Dumbbells</label><label><input type="checkbox" id="genEquip-kettlebell">Kettlebell</label><label><input type="checkbox" id="genEquip-barbell">Barbell</label><label><input type="checkbox" id="genEquip-machine">Gym machines</label><label><input type="checkbox" id="genEquip-bench">Weight bench</label><label><input type="checkbox" id="genEquip-box">Sturdy box</label><label><input type="checkbox" id="genEquip-rack">Squat rack</label></div></fieldset><details class="gen-exclusions"><summary>Muscle groups and exercises to leave out</summary><div class="gen-checks"><label><input type="checkbox" id="genAvoid-Quads">Quads</label><label><input type="checkbox" id="genAvoid-Hamstrings">Hamstrings</label><label><input type="checkbox" id="genAvoid-Glutes">Glutes</label><label><input type="checkbox" id="genAvoid-Calves">Calves</label><label><input type="checkbox" id="genAvoid-Core">Core</label><label><input type="checkbox" id="genAvoid-Back">Back</label><label><input type="checkbox" id="genAvoid-Upper-body">Upper body</label></div><label class="gen-omit">Exclude exercises containing<input type="text" id="genOmit" placeholder="For example: lunge" maxlength="60"></label></details>
+<label class="gen-prep"><input type="checkbox" id="genPrep" checked>Include warm-up and stretching suggestions in the time estimate</label>
+<div class="gen-actions"><button type="button" id="genGenerate" class="btn-primary">Generate workout</button></div>
+<div id="genDraft" class="gen-draft"></div><p id="genStatus" class="search-hint" role="status" aria-live="polite"></p>
+</div></details><div id="generatorSavedSupport" class="gen-actions"></div>
       <div class="search-block">
         <label class="section-label" for="exerciseSearchInput">Find an exercise</label>
         <div class="search-input-wrap">
@@ -1177,6 +1197,9 @@ try { customVideos = JSON.parse(localStorage.getItem('strengthlib_video_edits') 
 function saveCustomVideos(){
   try { localStorage.setItem('strengthlib_video_edits', JSON.stringify(customVideos)); } catch(e) {}
 }
+AUTO_EXERCISE_VIDEOS['Bodyweight Deadbug']=['R-7HStQFcnU'];
+AUTO_EXERCISE_VIDEOS['Forearm Plank']=['rWGSQmSbnnY'];
+AUTO_EXERCISE_VIDEOS['Incline Chest Press Machine']=['ArMbAy4emuA'];
 function getVideosFor(ex){
   const auto = AUTO_EXERCISE_VIDEOS[ex] || [];
   const added = (customVideos[ex] && customVideos[ex].add) || [];
@@ -1284,6 +1307,7 @@ function clearWorkout(){
 }
 
 function renderWorkoutBar(){
+  renderGeneratorSupport();
   const bar = document.getElementById('workoutBar');
   if(myWorkout.length===0){ bar.style.display='none'; bar.innerHTML=''; return; }
   bar.style.display='flex';
@@ -1961,7 +1985,7 @@ function showLibrary(view){
   }
   // Unload inactive players when changing areas.
   sessionOpenVideo=null;document.getElementById('hubSearchResults').innerHTML='';document.getElementById('sessionResults').innerHTML='';
-  if(!builder){openVideoPanels={};openSearchVideoPanels={};renderResults();renderSearchResults();}
+  if(!builder){generatorOpenVideo=null;renderGeneratorDraft();openVideoPanels={};openSearchVideoPanels={};renderResults();renderSearchResults();}
   if(hub)renderHub();
   if(!(builder||hub))renderSessionLibrary();
 }
@@ -2124,6 +2148,150 @@ document.getElementById('sessionSearchClear').onclick=()=>{document.getElementBy
 document.getElementById('sessionFocus').addEventListener('change',e=>{sessionFocus=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionFormat').addEventListener('change',e=>{sessionFormat=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
 document.getElementById('sessionDuration').addEventListener('change',e=>{sessionDuration=e.target.value;sessionOpenVideo=null;renderSessionLibrary();});
+// Curated choices: explicit equipment requirements avoid unreliable source categories.
+const GENERATOR_EQUIPMENT={band:'Resistance band',dumbbell:'Dumbbells',kettlebell:'Kettlebell',barbell:'Barbell',machine:'Gym machines',bench:'Weight bench',box:'Sturdy box',rack:'Squat rack'};
+const GENERATOR_FOCUS={running:'Running strength',full:'Full body',upper:'Upper body',lower:'Lower body',core:'Core'};
+const GENERATOR_PATTERNS={squat:'Squat',posterior:'Posterior chain','single-leg':'Single-leg strength',calf:'Calves',core:'Core',hip:'Hip stability',push:'Upper-body push',pull:'Upper-body pull',arms:'Arms'};
+const GENERATOR_TEMPLATES={running:['squat','posterior','calf','core','single-leg','hip','pull'],full:['squat','posterior','push','pull','core','single-leg','calf','hip'],upper:['push','pull','arms','core'],lower:['squat','posterior','single-leg','calf','hip','core'],core:['core','core','core']};
+const GENERATOR_CHOICES=[
+ ['Prisoner Squat','7l8pcwPvzhY','squat','Upper Legs (combo)','Bodyweight',[],['Quads','Glutes'],0,false,false],
+ ['Goblet Squat','5MvEidxsnR8','squat','Upper Legs (combo)','Dumbbell/Kettlebell',['dumbbell'],['Quads','Glutes'],0,false,false],
+ ['Goblet Squat','5MvEidxsnR8','squat','Upper Legs (combo)','Dumbbell/Kettlebell',['kettlebell'],['Quads','Glutes'],0,false,false],
+ ['Banded Squat','H6-ItA5-4K4','squat','Quads','Resistance Band',['band'],['Quads','Glutes'],0,false,false],
+ ['Leg Press / Hack Squat Machine','B8KqmwdomoU','squat','Quads','Gym Machine',['machine'],['Quads','Glutes'],0,false,false],
+ ['Barbell Back Squat','Pq9RTH7fyto','squat','Quads','Barbell',['barbell','rack'],['Quads','Glutes'],2,false,false],
+ ['Bodyweight Glute Bridge Hold','bW4mS5gj1-s','posterior','Glutes','Bodyweight',[],['Glutes','Hamstrings'],0,false,true],
+ ['Hamstring Glute Bridge March','mkNc8grZCfY','posterior','Hamstrings','Bodyweight',[],['Glutes','Hamstrings'],1,true,false],
+ ['Banded Good Morning','QXwq5PLb0lw','posterior','Hamstrings','Resistance Band',['band'],['Glutes','Hamstrings','Back'],1,false,false],
+ ['Seated Banded Hamstring Curl','Yn_JO0zLMp8','posterior','Hamstrings','Resistance Band',['band'],['Hamstrings'],0,false,false],
+ ['Weighted Deadlift (including sumo)','HtAKAbfj4qs','posterior','Back','Dumbbell/Kettlebell',['kettlebell'],['Hamstrings','Glutes','Back'],1,false,false],
+ ['Barbell Romanian Deadlift','EheLmQyp8ds','posterior','Hamstrings','Barbell',['barbell'],['Hamstrings','Glutes','Back'],2,false,false],
+ ['Hamstring Curl Machine','ceG0f6ntNcw','posterior','Hamstrings','Gym Machine',['machine'],['Hamstrings'],0,false,false],
+ ['Lunge (all variations)','j3GYBY6pOgk','single-leg','Upper Legs (combo)','Bodyweight',[],['Quads','Glutes'],0,true,false],
+ ['Lunge (all variations)','qBeFn2dYh1w','single-leg','Upper Legs (combo)','Bodyweight',[],['Quads','Glutes'],1,true,false],
+ ['Kettlebell Split Squat','Rc_v-P1xMJE','single-leg','Upper Legs (combo)','Dumbbell/Kettlebell',['kettlebell'],['Quads','Glutes'],1,true,false],
+ ['Barbell Split Squat','JnoG898iDTw','single-leg','Quads','Barbell',['barbell','rack'],['Quads','Glutes'],2,true,false],
+ ['Bodyweight Double Leg Calf Raise','aK9J966YXto','calf','Calves','Bodyweight',[],['Calves'],0,false,false],
+ ['Single Leg Bodyweight Calf Raise','wqWdXcL_XNM','calf','Calves','Bodyweight',[],['Calves'],1,true,false],
+ ['Soleus Calf Raises (all variations)','1QAny_nnHJ0','calf','Feet & Ankles','Bodyweight',[],['Calves'],0,false,false],
+ ['Barbell Calf Raise','NKnCsjY0smk','calf','Calves','Barbell',['barbell'],['Calves'],2,false,false],
+ ['Bodyweight Deadbug','R-7HStQFcnU','core','Core','Bodyweight',[],['Core'],0,true,false],
+ ['Forearm Plank','rWGSQmSbnnY','core','Core','Bodyweight',[],['Core'],0,false,true],
+ ['Bird Dog','bDytA3bhL5M','core','Core','Bodyweight',[],['Core'],0,true,false],
+ ['Knee Side Plank','TmXkenAhqvI','core','Core','Bodyweight',[],['Core'],0,true,true],
+ ['Side Plank','ga4N1hIeY48','core','Core','Bodyweight',[],['Core'],1,true,true],
+ ['Shoulder Tap Plank','xt3ZLjR64nU','core','Core','Bodyweight',[],['Core','Upper body'],1,true,false],
+ ['Bodyweight Clamshell','FbAiyx_ma_4','hip','Hips','Bodyweight',[],['Glutes'],0,true,false],
+ ['Inverse Clamshell','Wg306pyKIOg','hip','Hips','Bodyweight',[],['Glutes'],1,true,false],
+ ['Push Ups (including Box, Knees, Eccentric)','kzadxDsYZNc','push','Upper Body','Bodyweight',[],['Upper body'],0,false,false],
+ ['Push Ups (including Box, Knees, Eccentric)','9M-kiy7SImg','push','Upper Body','Bodyweight',[],['Upper body'],1,false,false],
+ ['Push Ups (including Box, Knees, Eccentric)','F8qDurMIFT4','push','Upper Body','Bodyweight',['box'],['Upper body'],0,false,false],
+ ['Dumbbell Chest Press','lGxzOFuKkTg','push','Upper Body','Dumbbell/Kettlebell',['dumbbell','bench'],['Upper body'],0,false,false],
+ ['Incline Chest Press Machine','ArMbAy4emuA','push','Upper Body','Gym Machine',['machine'],['Upper body'],0,false,false],
+ ['Band Pull-apart','Y13pxNKd2a0','pull','Back','Resistance Band',['band'],['Back','Upper body'],0,false,false],
+ ['Cable Seated Row','mrjFwU3dlCs','pull','Back','Gym Machine',['machine'],['Back','Upper body'],0,false,false],
+ ['Barbell Bent Over Row','8PcAiL3dqmA','pull','Back','Barbell',['barbell'],['Back','Upper body'],2,false,false],
+ ['Dumbbell Bicep Curl','VvHGcHe-yNo','arms','Upper Body','Dumbbell/Kettlebell',['dumbbell'],['Upper body'],0,false,false],
+ ['Banded Bicep Curls','b-JLXzi5-ak','arms','Upper Body','Resistance Band',['band'],['Upper body'],0,false,false]
+].map(([exercise,videoId,pattern,muscle,category,equipment,targets,level,perSide,timed])=>({exercise,videoId,pattern,muscle,category,equipment,targets,level,perSide,timed}));
+let generatorDraft=null,generatorVersion=0,generatorOpenVideo=null;
+function generatorOptions(){
+ return {focus:document.getElementById('genFocus').value,minutes:Number(document.getElementById('genTime').value),level:Number(document.getElementById('genLevel').value),equipment:Object.keys(GENERATOR_EQUIPMENT).filter(k=>document.getElementById('genEquip-'+k).checked),avoid:['Quads','Hamstrings','Glutes','Calves','Core','Back','Upper body'].filter(k=>document.getElementById('genAvoid-'+k.replace(/ /g,'-')).checked),omit:normalizeExercise(document.getElementById('genOmit').value||''),prep:document.getElementById('genPrep').checked};
+}
+function generatorEligible(options,pattern){
+ return GENERATOR_CHOICES.filter(c=>c.pattern===pattern&&c.level<=options.level&&c.equipment.every(k=>options.equipment.includes(k))&&!c.targets.some(k=>options.avoid.includes(k))&&(!options.omit||!normalizeExercise(c.exercise+' '+VIDEO_LOOKUP[c.videoId]).includes(options.omit))&&getVideosFor(c.exercise).includes(c.videoId));
+}
+function generatorPrescription(choice,level){
+ return {sets:level===0?'2':'3',reps:choice.timed?'20–30 sec'+(choice.perSide?' / side':''):'8–12'+(choice.perSide?' / side':''),rest:level===0?'60 sec':'90 sec',rir:choice.timed?'Controlled hold':'2–3 reps in reserve',goal:'General strength'};
+}
+function generatorExerciseSeconds(item){
+ const numbers=(item.reps.match(/\d+/g)||[]).map(Number);const value=Math.max(1,...numbers);
+ const work=(/sec/.test(item.reps)?value:value*3)*(item.choice.perSide?2:1);
+ const sets=Math.max(1,Math.min(4,Number(item.sets)||2));const rest=Number.parseInt(item.rest)||60;
+ return Math.ceil(sets*work+(sets-1)*rest+30);
+}
+function generatorTotalSeconds(draft){return draft.items.reduce((n,item)=>n+generatorExerciseSeconds(item),0)+draft.prep.reduce((n,v)=>n+v.seconds,0);}
+function makeGeneratorDraft(options,version=0){
+ const draft={options:{...options},items:[],notes:[],prep:[],used:false};
+ if(options.prep&&!options.avoid.length)draft.prep=[{id:'3Ey3mzzHgT8',label:'Warm-up: full body mobilisation',seconds:120},{id:'me_2mtMV6Eo',label:'Finish: standing full body stretch',seconds:240}];
+ else if(options.prep&&options.avoid.length)draft.notes.push('Full-body warm-up and stretching suggestions were omitted because you excluded muscle groups.');
+ const used=new Set();let time= draft.prep.reduce((n,v)=>n+v.seconds,0);let limited=false;
+ for(const pattern of GENERATOR_TEMPLATES[options.focus]||[]){
+  const all=generatorEligible(options,pattern).filter(c=>!used.has(c.videoId));
+  // Prefer the selected equipment, then vary within each compatible pattern.
+  all.sort((a,b)=>b.equipment.length-a.equipment.length);
+  const candidates=all.length?[...all.slice(version%all.length),...all.slice(0,version%all.length)]:[];
+  let picked=null;
+  for(const choice of candidates){const item={choice,...generatorPrescription(choice,options.level)};if(time+generatorExerciseSeconds(item)<=options.minutes*60){picked=item;break;}}
+  if(picked){draft.items.push(picked);used.add(picked.choice.videoId);time+=generatorExerciseSeconds(picked);}
+  else if(all.length)limited=true;
+  else if(!draft.notes.includes(`No compatible ${GENERATOR_PATTERNS[pattern].toLowerCase()} exercise is available with these settings.`))draft.notes.push(`No compatible ${GENERATOR_PATTERNS[pattern].toLowerCase()} exercise is available with these settings.`);
+ }
+ if(limited)draft.notes.push('Some movements were left out to stay within your time limit.');
+ if(!draft.items.length){draft.prep=[];draft.notes.push('No strength workout fits these settings. Allow more time, select additional equipment or reduce the exclusions.');}
+ return draft;
+}
+function generateWorkoutDraft(){generatorVersion++;generatorDraft=makeGeneratorDraft(generatorOptions(),generatorVersion-1);generatorOpenVideo=null;document.getElementById('genStatus').textContent='';renderGeneratorDraft();}
+function generatorAlternatives(index){
+ const draft=generatorDraft,current=draft.items[index];const other=draft.items.filter((_,i)=>i!==index);const base=other.reduce((n,w)=>n+generatorExerciseSeconds(w),0)+draft.prep.reduce((n,v)=>n+v.seconds,0);
+ return generatorEligible(draft.options,current.choice.pattern).filter(c=>c.videoId!==current.choice.videoId&&!other.some(w=>w.choice.videoId===c.videoId)).filter(c=>base+generatorExerciseSeconds({choice:c,...generatorPrescription(c,draft.options.level)})<=draft.options.minutes*60);
+}
+function swapGeneratedExercise(index){const choices=generatorAlternatives(index);if(!choices.length)return;const choice=choices[0];generatorDraft.items[index]={choice,...generatorPrescription(choice,generatorDraft.options.level)};generatorDraft.used=false;document.getElementById('genStatus').textContent='';generatorOpenVideo=null;renderGeneratorDraft();}
+function openGeneratorVideo(id){
+ const video=HUB_VIDEO_MAP.get(id);if(!video)return;
+ hubTopic='all';sessionCollection='';sessionFocus='';sessionFormat='';sessionDuration='';document.getElementById('sessionSearchInput').value=video.title;document.getElementById('sessionFormat').value='';document.getElementById('sessionDuration').value='';showLibrary('sessions');sessionOpenVideo=id;renderSessionLibrary();
+}
+function renderGeneratorSupport(){
+ const root=document.getElementById('generatorSavedSupport');if(!root)return;root.innerHTML='';
+ if(!myWorkout.length)return;
+ for(const v of workoutMeta.supportVideos||[]){if(!HUB_VIDEO_MAP.has(v.id))continue;const b=el('button','btn-ghost');b.type='button';b.textContent=v.label;b.onclick=()=>openGeneratorVideo(v.id);root.appendChild(b);}
+}
+function useGeneratorDraft(){
+ const draft=generatorDraft;if(!draft?.items.length||draft.used)return;
+ const replace=document.getElementById('genSaveMode').value==='replace';
+ if(replace&&myWorkout.length&&!confirm('Replace your existing workout with this draft?'))return;
+ if(replace){myWorkout=[];playerProgress={};savePlayerProgress();}
+ let added=0;
+ for(const item of draft.items){const c=item.choice;if(myWorkout.some(w=>w.videoId===c.videoId))continue;
+  myWorkout.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),muscle:c.muscle,category:c.category,exercise:c.exercise,videoId:c.videoId,goal:item.goal,sets:item.sets,reps:item.reps,rest:item.rest,rir:item.rir});added++;
+ }
+ if(replace||myWorkout.length===added){workoutMeta.name=GENERATOR_FOCUS[draft.options.focus]+' workout';workoutMeta.supportVideos=draft.prep.map(v=>({id:v.id,label:v.label}));saveWorkoutMeta();}
+ if(!replace&&added>0&&draft.prep.length){const support=workoutMeta.supportVideos||[];workoutMeta.supportVideos=[...support,...draft.prep.filter(v=>!support.some(s=>s.id===v.id)).map(v=>({id:v.id,label:v.label}))];saveWorkoutMeta();}
+ saveWorkout();draft.used=true;renderWorkoutBar();renderResults();renderSearchResults();renderGeneratorDraft();renderGeneratorSupport();
+ document.getElementById('genStatus').textContent=added?`${added} exercise${added===1?'':'s'} saved to your workout. Open Workout sheet to edit or print it.`:'These exercises are already in your workout.';
+}
+function renderGeneratorDraft(){
+ const root=document.getElementById('genDraft');root.innerHTML='';const draft=generatorDraft;if(!draft)return;
+ const heading=el('h3');heading.textContent=GENERATOR_FOCUS[draft.options.focus]+' draft';root.appendChild(heading);
+ const estimate=Math.ceil(generatorTotalSeconds(draft)/60);const subtitle=el('p','search-hint');subtitle.textContent=`Estimated ${estimate} min of ${draft.options.minutes} min available · ${draft.items.length} exercises${draft.prep.length?' · includes 2-min warm-up and 4-min stretch':''}`;root.appendChild(subtitle);
+ if(estimate>draft.options.minutes)root.appendChild(el('p','gen-message','Your edits take this draft beyond the selected time. Reduce sets or allow more time.'));
+ for(const note of draft.notes){const p=el('p','gen-message');p.textContent=note;root.appendChild(p);}
+ for(const [index,item] of draft.items.entries()){
+  const c=item.choice,row=el('article','gen-exercise');const title=el('h4');title.textContent=`${index+1}. ${VIDEO_LOOKUP[c.videoId]||c.exercise}`;row.appendChild(title);
+  const reason=el('p','session-meta');reason.textContent=`${GENERATOR_PATTERNS[c.pattern]} · ${c.equipment.map(k=>GENERATOR_EQUIPMENT[k]).join(' + ')||'Bodyweight'} · ${c.targets.join(', ')}`;row.appendChild(reason);
+  const fields=el('div','gen-prescription');
+  for(const [field,label] of [['sets','Sets'],['reps','Reps / hold'],['rest','Rest']]){
+   const wrap=el('label');wrap.textContent=label;
+   const input=field==='reps'?document.createElement('input'):document.createElement('select');
+   if(field==='reps'){input.type='text';input.maxLength=30;}
+   else for(const value of field==='sets'?['1','2','3','4']:['45 sec','60 sec','90 sec','120 sec']){const o=document.createElement('option');o.value=value;o.textContent=value;input.appendChild(o);}
+   input.value=item[field];input.onchange=()=>{item[field]=input.value;draft.used=false;document.getElementById('genStatus').textContent='';renderGeneratorDraft();};wrap.appendChild(input);fields.appendChild(wrap);
+  }
+  row.appendChild(fields);const actions=el('div','gen-actions');
+  const video=el('button','btn-ghost',generatorOpenVideo===c.videoId?'Close demo':'Play demo');video.type='button';video.onclick=()=>{generatorOpenVideo=generatorOpenVideo===c.videoId?null:c.videoId;renderGeneratorDraft();};actions.appendChild(video);
+  const swap=el('button','btn-ghost','Swap exercise');swap.type='button';swap.disabled=!generatorAlternatives(index).length;swap.onclick=()=>swapGeneratedExercise(index);actions.appendChild(swap);row.appendChild(actions);
+  if(generatorOpenVideo===c.videoId){const panel=el('div','video-panel');const embed=el('div','video-embed');const frame=document.createElement('iframe');frame.src=`https://www.youtube.com/embed/${c.videoId}`;frame.title=VIDEO_LOOKUP[c.videoId];frame.setAttribute('allowfullscreen','');embed.appendChild(frame);panel.appendChild(embed);appendVideoDetails(panel,c.videoId);row.appendChild(panel);}
+  root.appendChild(row);
+ }
+ for(const v of draft.prep){const button=el('button','btn-ghost');button.type='button';button.textContent=v.label+' · '+v.seconds/60+' min';button.onclick=()=>openGeneratorVideo(v.id);root.appendChild(button);}
+ if(draft.items.length){const action=el('div','gen-actions');const label=el('label');label.textContent='Save to workout';const select=document.createElement('select');select.id='genSaveMode';for(const [value,text] of [['add','Add to existing workout'],['replace','Replace existing workout']]){const option=document.createElement('option');option.value=value;option.textContent=text;select.appendChild(option);}label.appendChild(select);action.appendChild(label);
+ const use=el('button','btn-primary',draft.used?'Saved to workout':'Use this workout');use.type='button';use.disabled=draft.used;use.onclick=useGeneratorDraft;action.appendChild(use);root.appendChild(action);}
+ const guidance=el('p','search-hint');guidance.textContent='Time is an estimate for controlled reps, rest and transitions. Choose a manageable load and finish with 2–3 reps in reserve. You can adjust prescriptions in the workout sheet.';root.appendChild(guidance);
+}
+document.getElementById('genGenerate').onclick=generateWorkoutDraft;
+
+for(const id of ['genFocus','genTime','genLevel','genPrep','genOmit',...Object.keys(GENERATOR_EQUIPMENT).map(k=>'genEquip-'+k),...['Quads','Hamstrings','Glutes','Calves','Core','Back','Upper body'].map(k=>'genAvoid-'+k.replace(/ /g,'-'))])document.getElementById(id).addEventListener('change',()=>{if(generatorDraft)document.getElementById('genStatus').textContent='Settings changed. Generate again to apply them to a new draft.';});
+
 renderHubBrowse();
 render();
 showLibrary('hub');
