@@ -1210,7 +1210,7 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 
 .gen-exercise>.video-panel{margin-top:18px;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);gap:18px;}.gen-exercise>.video-panel>.video-details{grid-column:1;}.gen-exercise>.video-panel .video-embed{max-width:760px;width:100%;}
 
-#additionalBuilderVideos{margin-top:34px;border-top:1px solid var(--border);padding-top:24px;}.additional-heading{font:400 28px/1.3 'Inter',Arial,sans-serif;margin:0 0 10px;}.additional-muscle-group{margin:24px 0;}.additional-muscle-group>h4{font:500 15px/1.4 'Inter',Arial,sans-serif;margin:0;padding:0 0 12px;border-bottom:1px solid var(--border);}.additional-video{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;align-items:center;border-bottom:1px solid var(--border);padding:18px 0;}.additional-video-info h5{font:400 21px/1.35 'Inter',Arial,sans-serif;margin:0;}.additional-video-actions{display:flex;gap:15px;align-items:center;}.additional-video-actions button{font-size:14px;white-space:nowrap;}.additional-video>.video-panel{grid-column:1/-1;padding:0;background:transparent;border:0;grid-template-columns:minmax(0,1fr);}.additional-video>.video-panel .video-embed{max-width:760px;width:100%;}.additional-video>.video-panel .video-details{grid-column:1;}@media(max-width:640px){.additional-video{grid-template-columns:1fr;}.additional-video-actions{justify-content:flex-start;}.additional-video-actions button{padding-left:0;}.additional-heading{font-size:25px;}}
+
 
 /* Keep workout controls readable on the light studio surfaces. */
 .workout-bar{color:var(--ink);}
@@ -1223,6 +1223,15 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',Arial,sans-ser
 .btn-primary:disabled,.workout-bar .btn-primary:disabled,.gen-actions button:disabled{color:var(--ink-dim);background:var(--sage);border-color:var(--border);opacity:1;cursor:not-allowed;}
 
 button,input,select,textarea,option{font-family:'Inter',Arial,sans-serif;}
+
+.builder-options,.manual-exercises{border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:18px 0;}
+.builder-options>summary,.manual-exercises>summary{cursor:pointer;min-height:48px;padding:14px 0;font-size:16px;font-weight:500;}
+.manual-exercise-content{padding:0 0 24px;}
+.manual-exercises .filter-panel{margin:0 0 20px;border-top:0;}
+.manual-exercises .filter-panel>summary{font-size:14px;}
+.builder-options .gen-fieldset{margin:0 0 18px;border-top:0;padding-top:0;}
+.builder-options .gen-fieldset legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
+.session-card .library-workout-add{align-self:flex-start;order:2;padding-left:0;margin-top:8px;font-size:14px;}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23243b43'/%3E%3Cpath d='M7 8h18v5h-6v12h-6V13H7z' fill='%23f1ab7c'/%3E%3C/svg%3E">
 </head>
@@ -1251,26 +1260,27 @@ button,input,select,textarea,option{font-family:'Inter',Arial,sans-serif;}
     <p id="hubSearchCount" class="search-hint" aria-live="polite"></p><div id="hubSearchResults" class="session-grid" hidden></div>
     <div id="hubBrowse"><div id="hubTopicCards" hidden></div><div class="hub-heading"><h2>Guided collections</h2></div><div id="hubCollections" class="collection-grid"></div></div>
   </section>
-  <div class="workout-bar" id="workoutBar"></div>
 
   <div class="library-layout" id="strengthLibrary" hidden>
 
 
     <main class="library-main">
       <h2 class="library-view-heading" id="builderTitle">Workout builder</h2>
+<div class="workout-bar" id="workoutBar"></div>
 <details class="generator-panel" id="generatorPanel" open><summary>Generate a workout</summary><div class="generator-content">
 <p class="search-hint">Choose your settings, generate a draft, then swap or edit the exercises before saving.</p>
 <div class="generator-controls">
 <label>Focus<select id="genFocus"><option value="running">Running strength</option><option value="full">Full body</option><option value="upper">Upper body</option><option value="lower">Lower body</option><option value="core">Core</option></select></label>
 <label>Time available<select id="genTime"><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="35">35 minutes</option><option value="45">45 minutes</option></select></label>
 <label>Training goal<select id="genGoal"><option value="Endurance">Marathon / Endurance · 15+ reps</option><option value="Hypertrophy">Hypertrophy · 8–15 reps</option><option value="Strength">Strength · 5–8 reps</option><option value="Power">Power · fewer than 5 reps</option></select></label>
-</div><fieldset class="gen-fieldset"><legend>Equipment available</legend><p class="search-hint">Bodyweight is always available. Select only equipment you have.</p><div class="gen-checks"><label><input type="checkbox" id="genEquip-band">Resistance band</label><label><input type="checkbox" id="genEquip-dumbbell">Dumbbells</label><label><input type="checkbox" id="genEquip-kettlebell">Kettlebell</label><label><input type="checkbox" id="genEquip-barbell">Barbell</label><label><input type="checkbox" id="genEquip-machine">Gym machines</label><label><input type="checkbox" id="genEquip-bench">Weight bench</label><label><input type="checkbox" id="genEquip-box">Sturdy box</label><label><input type="checkbox" id="genEquip-rack">Squat rack</label></div></fieldset>
+</div><details class="builder-options" id="equipmentPanel"><summary>Equipment</summary><fieldset class="gen-fieldset"><legend>Equipment available</legend><p class="search-hint">Bodyweight is always available. Select only equipment you have.</p><div class="gen-checks"><label><input type="checkbox" id="genEquip-band">Resistance band</label><label><input type="checkbox" id="genEquip-dumbbell">Dumbbells</label><label><input type="checkbox" id="genEquip-kettlebell">Kettlebell</label><label><input type="checkbox" id="genEquip-barbell">Barbell</label><label><input type="checkbox" id="genEquip-machine">Gym machines</label><label><input type="checkbox" id="genEquip-bench">Weight bench</label><label><input type="checkbox" id="genEquip-box">Sturdy box</label><label><input type="checkbox" id="genEquip-rack">Squat rack</label></div></fieldset></details>
 <label class="gen-prep"><input type="checkbox" id="genPrep" checked>Include warm-up and stretching suggestions in the time estimate</label>
 <div class="gen-actions"><button type="button" id="genGenerate" class="btn-primary">Generate workout</button></div>
 <div id="genDraft" class="gen-draft"></div><p id="genStatus" class="search-hint" role="status" aria-live="polite"></p>
 </div></details><div id="generatorSavedSupport" class="gen-actions"></div>
+    <details class="manual-exercises" id="manualExercisePanel"><summary>Add an exercise</summary><div class="manual-exercise-content">
     <aside class="library-sidebar" aria-label="Exercise filters">
-      <details class="filter-panel" id="filterPanel">
+      <details class="filter-panel" id="filterPanel" open>
         <summary>Exercise filters <span class="filter-summary" id="filterSummary">All muscles · All equipment</span></summary>
         <div class="filter-content">
           <div class="filter-heading"><span>Find your focus</span><button type="button" class="btn-ghost" id="resetFilters">Clear</button></div>
@@ -1300,7 +1310,7 @@ button,input,select,textarea,option{font-family:'Inter',Arial,sans-serif;}
         <div class="prescription" id="prescriptionBox">Choose a training goal for sets and reps.</div>
       </div>
       <div id="results"></div>
-      <section id="additionalBuilderVideos" aria-label="Additional strength and stretching videos"></section>
+      </div></details>
     </main>
   </div>
 
@@ -1485,8 +1495,8 @@ function renderWorkoutBar(){
   playerBtn.onclick = openWorkoutPlayer;
   const clearBtn = el('button','btn-ghost','Clear');
   clearBtn.onclick = clearWorkout;
-  actions.appendChild(createBtn);
   actions.appendChild(playerBtn);
+  actions.appendChild(createBtn);
   actions.appendChild(clearBtn);
   bar.appendChild(actions);
 }
@@ -2139,7 +2149,7 @@ function renderLibraryView(view){
   sessionOpenVideo=null;document.getElementById('hubSearchResults').innerHTML='';document.getElementById('sessionResults').innerHTML='';
   if(!builder){generatorOpenVideo=null;renderGeneratorDraft();openVideoPanels={};openSearchVideoPanels={};renderResults();renderSearchResults();}
   if(builder)renderGeneratorDraft();
-  renderAdditionalBuilderVideos();
+  
   if(hub)renderHub();
   if(!(builder||hub))renderSessionLibrary();
 }
@@ -2218,6 +2228,8 @@ function buildHubVideoCard(video,host){
   const meta=el('p','session-meta');meta.textContent=(video.bodyParts.filter(p=>!['Upper body','Lower body'].includes(p)).length?video.bodyParts.filter(p=>!['Upper body','Lower body'].includes(p)):video.bodyParts).join(' · ')||video.topics.map(t=>HUB_TOPICS[t].label).join(' · ');body.appendChild(meta);
   const title=el('h3','session-card-title');title.textContent=video.title;body.appendChild(title);
 
+  const builderVideo=ADDITIONAL_BUILDER_VIDEOS.find(item=>item.video.id===video.id);
+  if(builderVideo){const existing=myWorkout.find(w=>w.videoId===video.id),add=el('button','video-btn library-workout-add',existing?'Remove from workout':'Add to workout');add.type='button';add.onclick=()=>{if(existing)removeFromWorkoutById(existing.id);else addAdditionalToWorkout(video.id);host==='hub'?renderHub():renderSessionLibrary();};body.appendChild(add);}
   if(sessionOpenVideo===video.id){const close=el('button','video-btn','Close video');close.type='button';close.setAttribute('aria-label','Close '+video.title);close.onclick=toggle;body.appendChild(close);}card.appendChild(body);
   if(sessionOpenVideo===video.id){
     const panel=el('div','video-panel');const embed=el('div','video-embed');const iframe=document.createElement('iframe');
@@ -2393,7 +2405,7 @@ function renderGeneratorSupport(){
 }
 function useGeneratorDraft(){
  const draft=generatorDraft;if(!draft?.items.length||draft.used)return;
- const replace=document.getElementById('genSaveMode').value==='replace';
+ const replace=document.getElementById('genSaveMode')?.value==='replace';
  if(replace&&myWorkout.length&&!confirm('Replace your existing workout with this draft?'))return;
  if(replace){myWorkout=[];playerProgress={};savePlayerProgress();}
  let added=0;
@@ -2435,8 +2447,8 @@ function renderGeneratorDraft(){
  }
  for(const v of draft.prep){const section=el('article','gen-exercise gen-preparation');const title=el('h4');title.textContent=v.label+' · '+v.seconds/60+' min';section.appendChild(title);if(!document.getElementById('strengthLibrary').hidden)appendGeneratorEmbed(section,v.id);root.appendChild(section);}
 
- if(draft.items.length){const action=el('div','gen-actions');const label=el('label');label.textContent='Save to workout';const select=document.createElement('select');select.id='genSaveMode';for(const [value,text] of [['add','Add to existing workout'],['replace','Replace existing workout']]){const option=document.createElement('option');option.value=value;option.textContent=text;select.appendChild(option);}label.appendChild(select);action.appendChild(label);
- const use=el('button','btn-primary',draft.used?'Saved to workout':'Use this workout');use.type='button';use.disabled=draft.used;use.onclick=useGeneratorDraft;action.appendChild(use);root.appendChild(action);}
+ if(draft.items.length){const action=el('div','gen-actions');const label=el('label');label.textContent='Save to workout';const select=document.createElement('select');select.id='genSaveMode';for(const [value,text] of [['add','Add to existing workout'],['replace','Replace existing workout']]){const option=document.createElement('option');option.value=value;option.textContent=text;select.appendChild(option);}label.appendChild(select);if(myWorkout.length)action.appendChild(label);
+ const use=el('button','btn-primary',draft.used?'Workout saved':'Save workout');use.type='button';use.disabled=draft.used;use.onclick=useGeneratorDraft;action.appendChild(use);root.appendChild(action);}
  const guidance=el('p','search-hint');guidance.textContent='Time is an estimate for controlled reps, rest and transitions. Choose a manageable load and use the selected goal’s reps in reserve. You can adjust prescriptions in the workout sheet.';root.appendChild(guidance);
 }
 document.getElementById('genGenerate').onclick=generateWorkoutDraft;
@@ -2463,58 +2475,27 @@ const ADDITIONAL_BUILDER_VIDEOS=HUB_VIDEOS.filter(v=>additionalIds.has(v.id)&&!v
  const parts=specific.length?specific:general?['General mobility']:video.bodyParts.length?video.bodyParts:['General mobility'];
  return {video,parts,kind,type:strength?'Strength':'Stretching & mobility'};
 });
-let additionalBuilderOpenVideo=null;
 function initializeAdditionalBuilderVideos(){
- for(const name of ['Full body','Lower body','General mobility'])if(!MUSCLES.includes(name)){MUSCLES.push(name);DATA[name]={};}
  for(const {video} of ADDITIONAL_BUILDER_VIDEOS){
   VIDEO_LOOKUP[video.id]=video.title;if(video.details)VIDEO_DETAILS[video.id]=video.details;
   const ids=AUTO_EXERCISE_VIDEOS[video.title]||[];if(!ids.includes(video.id))ids.push(video.id);AUTO_EXERCISE_VIDEOS[video.title]=ids;
  }
-}
-function additionalMatches(item){
- const muscle=state.muscle;
- const aliases={'Feet & Ankles':'Feet & ankles','Upper Body':'Upper body','Upper Legs (combo)':'Lower body','Upper/Lower Leg Combo':'Lower body','Core-Lower Combo':'Lower body'};
- const target=aliases[muscle]||muscle;
- if(target&&!item.parts.includes(target)&&!(target==='Lower body'&&item.parts.some(p=>['Feet & ankles','Shins','Calves','Quads','Hamstrings','Glutes','Hips'].includes(p)))&&!(target==='Upper body'&&item.parts.some(p=>['Back','Chest','Shoulders','Arms'].includes(p))))return false;
- return hubMatches(item.video,document.getElementById('exerciseSearchInput').value||'');
 }
 function addAdditionalToWorkout(id){
  const item=ADDITIONAL_BUILDER_VIDEOS.find(v=>v.video.id===id);if(!item||myWorkout.some(w=>w.videoId===id))return;
  const {video,kind,type,parts}=item;
  const strengthDemo=type==='Strength'&&kind==='exercise',goal=strengthDemo?(state.goal||'Endurance'):kind==='session'?'Follow-along':'Stretching';
  const g=GOALS[goal];
- myWorkout.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),exercise:video.title,videoId:id,muscle:state.muscle||parts[0],category:type,goal,kind:kind==='session'?'session':strengthDemo?'exercise':'stretch',libraryVideo:true,duration:video.duration||'',durationSeconds:video.seconds,
+ myWorkout.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),exercise:video.title,videoId:id,muscle:parts[0],category:type,goal,kind:kind==='session'?'session':strengthDemo?'exercise':'stretch',libraryVideo:true,duration:video.duration||'',durationSeconds:video.seconds,
   sets:g?.sets||'1',reps:g?.reps||(kind==='session'?video.duration||'Follow video':'Follow demonstration'),rest:g?.rest||'As needed',rir:g?`${g.rir}, RPE ${g.rpe}`:'—'});
- additionalBuilderOpenVideo=id;saveWorkout();renderWorkoutBar();renderAdditionalBuilderVideos();navigationPersist();
-}
-function renderAdditionalBuilderVideos(){
- const root=document.getElementById('additionalBuilderVideos');root.innerHTML='';
- if(document.getElementById('strengthLibrary').hidden)return;
- const heading=el('h3','additional-heading');heading.textContent='Strength & stretching videos';root.appendChild(heading);
- const hint=el('p','search-hint');hint.textContent='Uses your muscle selection and exercise search. Add a routine as a complete session, or a tutorial as an exercise.';root.appendChild(hint);
- const matches=ADDITIONAL_BUILDER_VIDEOS.filter(additionalMatches);
- if(!matches.length){root.appendChild(el('p','empty','No extra videos match this muscle or search.'));return;}
- const groups=new Map();
- for(const item of matches){const name=state.muscle||item.parts[0];if(!groups.has(name))groups.set(name,[]);groups.get(name).push(item);}
- for(const [group,items] of groups){
-  const section=el('section','additional-muscle-group');const title=el('h4');title.textContent=group;section.appendChild(title);
-  for(const item of items){
-   const {video,kind,type,parts}=item,row=el('article','additional-video');const info=el('div','additional-video-info');const name=el('h5');name.textContent=video.title;info.appendChild(name);
-   const meta=el('p','session-meta');meta.textContent=[type,parts.join(', '),kind==='session'?'Full session':'Tutorial',video.duration].filter(Boolean).join(' · ');info.appendChild(meta);row.appendChild(info);
-   const actions=el('div','additional-video-actions');const play=el('button','btn-ghost');play.type='button';play.textContent=additionalBuilderOpenVideo===video.id?'Close video':'Play';play.setAttribute('aria-label',play.textContent+' '+video.title);play.onclick=()=>{additionalBuilderOpenVideo=additionalBuilderOpenVideo===video.id?null:video.id;renderAdditionalBuilderVideos();navigationPersist();};actions.appendChild(play);
-   const existing=myWorkout.find(w=>w.videoId===video.id),add=el('button','btn-ghost');add.type='button';add.textContent=existing?'Remove':'Add to workout';add.onclick=()=>{if(existing){removeFromWorkoutById(existing.id);renderAdditionalBuilderVideos();}else addAdditionalToWorkout(video.id);};actions.appendChild(add);row.appendChild(actions);
-   if(additionalBuilderOpenVideo===video.id)appendGeneratorEmbed(row,video.id);
-   section.appendChild(row);
-  }
-  root.appendChild(section);
- }
+ saveWorkout();renderWorkoutBar();navigationPersist();
 }
 
 // Hash routes work on the existing static host, including direct links and refreshes.
 let navigationReady=false,navigationBusy=false,navigationView='hub',navigationDepth=0,navigationCache=null;
 const NAVIGATION_VIEWS=new Set(['hub','sessions','builder','strength','warmups','yoga','pilates','mobility']);
 function navigationCapture(){
- return {view:navigationView,topic:hubTopic,collection:sessionCollection,format:sessionFormat,duration:sessionDuration,focus:sessionFocus,query:document.getElementById('sessionSearchInput').value,hubQuery:document.getElementById('hubSearchInput').value,video:sessionOpenVideo,muscle:state.muscle,goal:state.goal,equipment:[...state.equip],builderQuery:document.getElementById('exerciseSearchInput').value,builderVideos:{...openVideoPanels},additionalVideo:additionalBuilderOpenVideo,builderSearchVideos:{...openSearchVideoPanels},generatorVideo:generatorOpenVideo,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:window.scrollY||0};
+ return {view:navigationView,topic:hubTopic,collection:sessionCollection,format:sessionFormat,duration:sessionDuration,focus:sessionFocus,query:document.getElementById('sessionSearchInput').value,hubQuery:document.getElementById('hubSearchInput').value,video:sessionOpenVideo,muscle:state.muscle,goal:state.goal,equipment:[...state.equip],builderQuery:document.getElementById('exerciseSearchInput').value,builderVideos:{...openVideoPanels},builderSearchVideos:{...openSearchVideoPanels},generatorVideo:generatorOpenVideo,manualOpen:document.getElementById('manualExercisePanel').open,equipmentOpen:document.getElementById('equipmentPanel').open,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:window.scrollY||0};
 }
 function navigationURL(snapshot){
  const q=new URLSearchParams();let path=snapshot.view==='hub'?'home':snapshot.view;
@@ -2535,7 +2516,7 @@ function navigationParse(hash){
  let view=parts[0]==='home'?'hub':parts[0];if(parts[0]==='collections')view='sessions';if(!NAVIGATION_VIEWS.has(view))view='hub';
  let collection=parts[0]==='collections'?parts[1]||'':q.get('collection')||'';if(!HUB_COLLECTIONS.some(c=>c.id===collection))collection='';
  const topic=Object.hasOwn(HUB_TOPICS,view)?view:Object.hasOwn(HUB_TOPICS,q.get('topic'))?q.get('topic'):'all';
- return {view,topic,collection,format:['session','exercise'].includes(q.get('format'))?q.get('format'):'',duration:'',focus:q.get('focus')||'',query:view==='builder'||view==='hub'?'':q.get('q')||'',hubQuery:view==='hub'?q.get('q')||'':'',video:HUB_VIDEO_MAP.has(q.get('video'))?q.get('video'):null,muscle:MUSCLES.includes(q.get('muscle'))?q.get('muscle'):null,goal:Object.hasOwn(GOALS,q.get('goal'))?q.get('goal'):null,equipment:(q.get('equipment')||'').split(',').filter(v=>EQUIP_ORDER.includes(v)),builderQuery:view==='builder'?q.get('q')||'':'',builderVideos:{},builderSearchVideos:{},generatorVideo:null,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:0};
+ return {view,topic,collection,format:['session','exercise'].includes(q.get('format'))?q.get('format'):'',duration:'',focus:q.get('focus')||'',query:view==='builder'||view==='hub'?'':q.get('q')||'',hubQuery:view==='hub'?q.get('q')||'':'',video:HUB_VIDEO_MAP.has(q.get('video'))?q.get('video'):null,muscle:MUSCLES.includes(q.get('muscle'))?q.get('muscle'):null,goal:Object.hasOwn(GOALS,q.get('goal'))?q.get('goal'):null,equipment:(q.get('equipment')||'').split(',').filter(v=>EQUIP_ORDER.includes(v)),builderQuery:view==='builder'?q.get('q')||'':'',builderVideos:{},builderSearchVideos:{},generatorVideo:null,manualOpen:document.getElementById('manualExercisePanel').open,equipmentOpen:document.getElementById('equipmentPanel').open,filterOpen:document.getElementById('filterPanel').open,generatorOpen:document.getElementById('generatorPanel').open,scroll:0};
 }
 function navigationPersist(){
  if(!navigationReady||navigationBusy)return;
@@ -2564,9 +2545,9 @@ function navigationRestore(snapshot,depth=0){
  hubTopic=snapshot.topic;sessionCollection=snapshot.collection;sessionFormat=snapshot.format;sessionDuration='';sessionFocus=snapshot.focus;sessionOpenVideo=snapshot.video;
  document.getElementById('sessionSearchInput').value=snapshot.query||'';document.getElementById('hubSearchInput').value=snapshot.hubQuery||'';
  state.muscle=snapshot.muscle;state.goal=snapshot.goal;state.equip=new Set(snapshot.equipment||[]);document.getElementById('exerciseSearchInput').value=snapshot.builderQuery||'';
- additionalBuilderOpenVideo=snapshot.additionalVideo||null;
  openVideoPanels=snapshot.builderVideos||{};openSearchVideoPanels=snapshot.builderSearchVideos||{};generatorOpenVideo=navigationView==='builder'?snapshot.generatorVideo:null;
- for(const [id,value] of [['filterPanel',snapshot.filterOpen],['generatorPanel',snapshot.generatorOpen]])if(typeof value==='boolean')document.getElementById(id).open=value;
+ document.getElementById('manualExercisePanel').open=snapshot.manualOpen??!!(snapshot.builderQuery||snapshot.muscle||snapshot.goal||snapshot.equipment?.length);
+ for(const [id,value] of [['equipmentPanel',snapshot.equipmentOpen],['filterPanel',snapshot.filterOpen],['generatorPanel',snapshot.generatorOpen]])if(typeof value==='boolean')document.getElementById(id).open=value;
  if(navigationView==='hub')renderHub();else if(navigationView==='builder'){render();renderGeneratorDraft();}else renderSessionLibrary();
  closeAppMenu();navigationBusy=false;navigationCache=navigationCapture();navigationRender();
  window.requestAnimationFrame?.(()=>window.scrollTo?.({top:snapshot.scroll||0,behavior:'instant'}));navigationFocusHeading();
@@ -2605,9 +2586,10 @@ function initializeNavigation(){
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('appMenuToggle').getAttribute('aria-expanded')==='true'){closeAppMenu();document.getElementById('appMenuToggle').focus();}});
  const originalHub=renderHub;renderHub=function(){originalHub();if(navigationView==='hub')navigationPersist();};
  const originalSessions=renderSessionLibrary;renderSessionLibrary=function(){originalSessions();if(navigationView!=='hub'&&navigationView!=='builder')navigationPersist();};
- const originalResults=renderResults;renderResults=function(){originalResults();renderAdditionalBuilderVideos();if(navigationView==='builder')navigationPersist();};
- const originalSearch=renderSearchResults;renderSearchResults=function(){originalSearch();renderAdditionalBuilderVideos();if(navigationView==='builder')navigationPersist();};
+ const originalResults=renderResults;renderResults=function(){originalResults();if(navigationView==='builder')navigationPersist();};
+ const originalSearch=renderSearchResults;renderSearchResults=function(){originalSearch();if(navigationView==='builder')navigationPersist();};
  const originalGenerator=renderGeneratorDraft;renderGeneratorDraft=function(){originalGenerator();if(navigationView==='builder')navigationPersist();};
+ for(const id of ['manualExercisePanel','equipmentPanel'])document.getElementById(id).addEventListener('toggle',navigationPersist);
  document.getElementById('navigationBack').onclick=navigationBack;document.getElementById('navigationHome').onclick=navigationHome;document.getElementById('brandHome').onclick=e=>{e.preventDefault();navigationHome();};
  window.addEventListener('popstate',e=>{const saved=e.state?.trainingHub?e.state:null;navigationRestore(saved?.snapshot||navigationParse(window.location?.hash),saved?.depth||0);});
  window.addEventListener('hashchange',()=>{if(navigationURL(navigationCache||navigationCapture())!==window.location?.hash){navigationRestore(navigationParse(window.location?.hash),0);navigationCommit(false);}});
